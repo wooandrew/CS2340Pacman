@@ -29,13 +29,36 @@ public class App extends Application {
         stage.setTitle(title);
         stage.setScene(scene);
         
-
         AnimationTimer loop = new AnimationTimer() {
 
             @Override
             public void handle(long now) {
-                System.out.println("Idea!");
+                
                 gm.setState(State.GAMEOVER);
+
+                switch (gm.getState()) {
+
+                    case HOME:
+
+                    // Set next scene
+                    // stage.setScene(class.scene)
+                    break;
+                    case SETTINGS:
+
+                    // Set next scene
+                    // stage.setScene(class.scene)
+                    break;
+                    case INGAME:
+
+                    // Set next scene
+                    // stage.setScene(class.scene)
+                    break;
+                    case GAMEOVER:
+
+                    // Set next scene
+                    // stage.setScene(class.scene)
+                    break;
+                }
             }
         };
         loop.start();
