@@ -25,4 +25,12 @@ public class settingspartone {
         ign = in;
     }
 
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(String in2) {
+        difficulty = in2;
+    }
+
 }
