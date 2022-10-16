@@ -3,11 +3,9 @@ package com.group64.Map;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 
 import java.io.File;
 
@@ -21,9 +19,7 @@ public class Map {
     }
 
     public Scene getScene() {
-        return scene;
-    }
-    public void setScene() {
+
         StackPane root = new StackPane();
         Canvas canvas = new Canvas( 800, 500 );
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -35,5 +31,7 @@ public class Map {
         gc.drawImage( pac, 0, 0 );
         root.getChildren().add(canvas);
         Scene scene = new Scene(root, 800, 500);
+
+        return scene;
     }
 }
