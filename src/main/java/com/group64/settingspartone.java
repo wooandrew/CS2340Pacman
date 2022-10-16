@@ -1,5 +1,9 @@
 package com.group64;
 
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
 public class settingspartone {
     private String ign;
     private String difficulty;
@@ -7,6 +11,17 @@ public class settingspartone {
     public settingspartone() {
         ign = "";
         difficulty = "easy";
+    }
+
+    //runs the actual game
+    public void settingscene(Stage stage) {
+        VBox setttingNode = new VBox();
+        Scene settingsScene =  new Scene(setttingNode);
+
+
+
+        stage.setScene(settingsScene);
+        stage.show();
     }
 
     public boolean validName() {
