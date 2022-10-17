@@ -11,7 +11,7 @@ import java.io.File;
 
 public class Map {
     private Points points;
-    Scene scene;
+    private Scene scene;
 
     public Map(Points points) {
         this.points = points;
