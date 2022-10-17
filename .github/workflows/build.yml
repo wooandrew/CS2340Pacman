@@ -35,4 +35,4 @@ jobs:
     steps:
     - name: Execute checkstyle script
       run: |
-        python checkstyle.py
+        python run_checkstyle.py
