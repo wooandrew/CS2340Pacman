@@ -20,7 +20,7 @@ jobs:
     steps:
     - name: Build & Run
       run: |
-        mvn clean javafx:run
+        mvn package
       
   checkstyle:
   

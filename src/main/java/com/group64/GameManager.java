@@ -8,14 +8,14 @@ public class GameManager {
 
     private State state;
 
-    public GameManager(State _state) {
-        state = _state;
+    public GameManager(State state) {
+        this.state = state;
 
     }
 
     // Setters
-    public void setState(State _state) {
-        state = _state;
+    public void setState(State state) {
+        this.state = state;
     }
 
     // Getters
