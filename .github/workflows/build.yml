@@ -19,8 +19,8 @@ jobs:
     runs-on: [ self-hosted ]
 
     steps:
-    - name: Build & Run
     - uses: actions/checkout@v2
+    - name: Build & Run
       run: |
         mvn package
       
