@@ -13,21 +13,14 @@ on:
     branches: [ main ]
 
 jobs:
-
-  checkout:
-
-    runs-on: [ self-hosted ]
-
-    steps:
-    - name: Checkout
-    - uses: actions/checkout@v2
-
+    
   build:
 
     runs-on: [ self-hosted ]
 
     steps:
     - name: Build & Run
+    - uses: actions/checkout@v2
       run: |
         mvn package
       
