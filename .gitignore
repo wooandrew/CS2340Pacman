@@ -31,4 +31,6 @@ target
 # Ignore files created by IntelliJ IDEA
 .idea
 pacman.iml
-src/main/.DS_Store
+
+# Ignore files created by Mac
+.DS_Store
