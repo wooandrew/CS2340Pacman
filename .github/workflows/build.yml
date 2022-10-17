@@ -30,15 +30,9 @@ jobs:
       
   checkstyle:
   
-    runs-on: [ self-hosted ]
+    runs-on: [ self-hosted, linux ]
     
     steps:
-    - name: Run checkstyle
-      uses: actions/checkout@v2
-    - name: Setup Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.10
     - name: Execute checkstyle script
       run: |
         python checkstyle.py
