@@ -74,8 +74,6 @@ public class settingspartone {
         });
 
         getScene();
-        game.setScene(settings);
-        game.show();
     }
 
     public boolean badName(String str) {
