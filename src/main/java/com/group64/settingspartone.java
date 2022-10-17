@@ -5,6 +5,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -75,6 +76,20 @@ public class settingspartone extends Application {
                 setIgn(name.getText());
             }
         });
+
+        ComboBox comboBox = new ComboBox();
+        comboBox.setPromptText("Difficulty");
+        comboBox.getItems().add("easy");
+        comboBox.getItems().add("medium");
+        comboBox.getItems().add("hard");
+        pane.add(comboBox, 70, 55, 1, 1);
+
+        comboBox.setOnAction(e -> {
+            //System.out.println(comboBox.getValue());
+            difficulty = (String) comboBox.getValue();
+            System.out.println(difficulty);
+        });
+
 
         Scene settings = new Scene(pane);
         game.setScene(settings);
