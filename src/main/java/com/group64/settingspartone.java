@@ -1,7 +1,6 @@
 package com.group64;
 
 import javafx.application.Application;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -9,18 +8,30 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import static javafx.application.Application.launch;
 
 public class settingspartone extends Application {
     private String ign;
     private String difficulty;
+    private GridPane pane;
+    private TextField name;
+    private Button submit;
+    private Label check;
+    private Label check2;
+    private ComboBox comboBox;
+
 
     public settingspartone() {
         ign = null;
         difficulty = "easy";
+        pane = new GridPane();
+        name = new TextField();
+        submit = new Button("Submit");
+        check = new Label();
+        comboBox = new ComboBox();
+        check2 = new Label();
+
     }
 
     public boolean badName(String str) {
@@ -53,21 +64,16 @@ public class settingspartone extends Application {
         game.setWidth(600);
         game.setHeight(800);
 
-        GridPane pane = new GridPane();
         pane.setPadding(new Insets(10, 10, 10, 10));
         pane.setVgap(5);
         pane.setHgap(5);
 
-        TextField name = new TextField();
         name.setPromptText("Enter name.");
         pane.add(name, 70, 50, 1, 1);
 
-        Button submit = new Button("Submit");
-        pane.add(submit, 72, 50, 2, 1);
-
-        Label check = new Label();
         pane.add(check, 70, 51, 1, 1);
 
+        pane.add(submit, 72, 50, 2, 1);
         submit.setOnAction(e -> {
             if (badName(name.getText())) {
                 check.setText("not a valid name");
@@ -77,7 +83,9 @@ public class settingspartone extends Application {
             }
         });
 
-        ComboBox comboBox = new ComboBox();
+        pane.add(check2, 70, 56, 1, 1);
+        check2.setText("Difficulty Selected: " + difficulty);
+
         comboBox.setPromptText("Difficulty");
         comboBox.getItems().add("easy");
         comboBox.getItems().add("medium");
@@ -86,8 +94,8 @@ public class settingspartone extends Application {
 
         comboBox.setOnAction(e -> {
             //System.out.println(comboBox.getValue());
-            difficulty = (String) comboBox.getValue();
-            System.out.println(difficulty);
+            setDifficulty((String) comboBox.getValue());
+            check2.setText("Difficulty Selected: " + difficulty);
         });
 
 
