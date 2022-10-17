@@ -73,6 +73,7 @@ public class App extends Application {
 
 
         var label = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
+
         var scene2 = new Scene(new StackPane(label), 1200, 800);
 
 
