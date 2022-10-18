@@ -1,7 +1,8 @@
 package com.group64.Map;
 
 public class Points {
-    int point;
+    
+    private int point;
 
     public Points(int point) {
         this.point = point;
