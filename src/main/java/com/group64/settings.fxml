@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: Black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.group64.SettingsControllerClass">
+    <children>
+        <ImageView fitHeight="389.0" fitWidth="273.0" layoutX="193.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@Images/backgroundSettings.png" />
+            </image>
+        </ImageView>
+        <TextField fx:id="name" layoutX="314.0" layoutY="120.0" prefHeight="10.0" prefWidth="121.0" />
+        <ChoiceBox layoutX="314.0" layoutY="152.0" prefHeight="15.0" prefWidth="121.0" />
+        <ChoiceBox layoutX="314.0" layoutY="187.0" prefHeight="0.0" prefWidth="121.0" />
+    </children>
+</AnchorPane>
