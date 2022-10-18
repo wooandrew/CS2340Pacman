@@ -1,7 +1,6 @@
 package com.group64;
 
 import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -10,8 +9,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -30,34 +27,34 @@ public class Settings {
     private ComboBox<String> comboBox;
     private Scene settings;
 
-
-
     private Button goButton;
 
     private ComboBox<String> characterSelect;
-    private TextField displayFinalName;
-    private Image yellowPacman = new Image(new FileInputStream("./src/main/java/com/group64/Images/yellowPacman.png"));
-    private Image grayPacman = new Image(new FileInputStream("./src/main/java/com/group64/Images/grayPacman.png"));
-    private Image magentaPacman = new Image(new FileInputStream("./src/main/java/com/group64/Images/magentaPacman.png"));
 
-    public Settings(Stage game) throws FileNotFoundException {
-        displayFinalName = new TextField();
+    // Skins
+    private Image yellowPacman;
+    private Image grayPacman;
+    private Image magentaPacman;
+
+    public Settings() throws FileNotFoundException {
+
         ign = null;
         difficulty = "easy";
         pane = new GridPane();
         name = new TextField();
         submit = new Button("Submit");
         check = new Label();
-        comboBox = new ComboBox();
+        comboBox = new ComboBox<String>();
         check2 = new Label();
         settings = new Scene(pane);
         selectedCharacter = new ImageView(yellowPacman);
         goButton = new Button("Go Forward");
         characterSelect = new ComboBox<>();
-
-        game.setTitle("pacman settings");
-        game.setWidth(600);
-        game.setHeight(800);
+        
+        yellowPacman = new Image(new FileInputStream("assets/pacmanYellow.png"));
+        grayPacman = new Image(new FileInputStream("assets/pacmanGray.png"));
+        magentaPacman = new Image(new FileInputStream("assets/pacmanMagenta.png"));
+        
 
         pane.setPadding(new Insets(10, 10, 10, 10));
         pane.setVgap(5);
@@ -65,23 +62,18 @@ public class Settings {
 
         name.setPromptText("Enter name.");
         pane.add(name, 70, 50, 1, 1);
-
         pane.add(check, 70, 51, 1, 1);
-
         pane.add(selectedCharacter, 72, 50, 2, 1);
-
-        pane.add(displayFinalName, 80, 80, 1, 1);
         //link to the combobox
 
-        pane.add(goButton,60, 40, 2, 11);
+        pane.add(goButton, 60, 40, 2, 11);
         goButton.setVisible(false);
         goButton.setOnAction(e -> {
             //get starting stage?
             //startingstage.setScene(gameScene);
         });
 
-
-        pane.add(characterSelect,40, 30, 1, 1);
+        pane.add(characterSelect, 40, 30, 1, 1);
         //add funtionality
         characterSelect.getItems().add("Yellow");
         characterSelect.getItems().add("Gray");
@@ -128,27 +120,23 @@ public class Settings {
     }
 
     public boolean badName(String str) {
-        if (str.isEmpty() || str.trim().length() == 0 || str == null) {
-            return true;
-        } else {
-            return false;
-        }
+        return (str.isEmpty() || str.trim().length() == 0 || str == null);
     }
 
     public String getIgn() {
         return ign;
     }
 
-    public void setIgn(String in) {
-        ign = in;
+    public void setIgn(String ign) {
+        this.ign = ign;
     }
 
     public String getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(String in2) {
-        difficulty = in2;
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
     }
 
     public Scene getScene() {

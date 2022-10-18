@@ -15,6 +15,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import com.group64.GameManager.State;
+import com.group64.Map.Map;
 
 /**
  * JavaFX App
@@ -23,6 +24,8 @@ public class App extends Application {
 
     private String title = "Group64 Pacman";
     private GameManager gm = new GameManager(State.HOME);
+    private Settings st;
+    private Map mp;
 
     void none() {
 
@@ -34,6 +37,15 @@ public class App extends Application {
         // var jVer = SystemInfo.javaVersion();
         // var jfxVer = SystemInfo.javafxVersion();
         // var label = new Label("Hello, JavaFX " + jVer + ", running on Java " + jfxVer + ".");
+
+        try {
+            st = new Settings();
+        } catch (Exception e) {
+            System.out.println("FAILED TO INITIALIZE SETTINGS: " + e.getMessage());
+            Platform.exit();
+        }
+        
+        mp = new Map(30);
 
         Label pacman = new Label("PACMAN");
         Font f1 = Font.font("Times New Roman", FontWeight.BOLD, 100);
@@ -75,16 +87,12 @@ public class App extends Application {
         var scene = new Scene(vbox, 1200, 800);
         scene.setFill(Color.BLACK);
 
-
-
-        
-
-
-        start.setOnAction(event -> none());
-        //settings.setOnAction((EventHandler) event -> "FAIQ and SNEH enter your code here");
+        start.setOnAction(event -> {
+            stage.setScene(mp.getScene());
+            gm.setState(State.INGAME);
+        });
+        settings.setOnAction(event -> stage.setScene(st.getScene()));
         exit.setOnAction(event -> Platform.exit());
-
-
 
         stage.setScene(scene);
         stage.setTitle(title);
@@ -93,8 +101,6 @@ public class App extends Application {
 
             @Override
             public void handle(long now) {
-                
-                gm.setState(State.GAMEOVER);
 
                 switch (gm.getState()) {
 
@@ -112,6 +118,9 @@ public class App extends Application {
                     // stage.setScene(class.scene)
                     break;
                     case INGAME:
+
+                        mp.getContext().drawImage(mp.getImage(), 0, 0);
+                        System.out.println("INGAME");
 
                     // Set next scene
                     // stage.setScene(class.scene)
