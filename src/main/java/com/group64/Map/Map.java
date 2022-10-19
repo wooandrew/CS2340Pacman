@@ -11,7 +11,7 @@ import java.io.File;
 
 public class Map {
 
-    private Points points;
+    private Points points; //points that will be available on map
     private Scene scene;
     private GraphicsContext gc;
     private Image pac;
@@ -24,7 +24,7 @@ public class Map {
         Canvas canvas = new Canvas(1200, 800);
         gc = canvas.getGraphicsContext2D();
 
-        String stream = "assets/Final pacman.png";
+        String stream = "assets/maze.png";
         pac = new Image(new File(stream).toURI().toString());
         
         ImageView image = new ImageView();
@@ -44,8 +44,11 @@ public class Map {
         return scene;
     }
 
-    public void draw() {
-        gc.drawImage(pac, 0, 0);
+    public void draw(int round, int lives, int points) {
+        gc.drawImage(pac, 380, 250);
+        gc.fillText("Lives: "+ lives, 20,30);
+        gc.fillText("Round "+ round, 560,30);
+        gc.fillText("Score: "+ points, 1100, 30);
     }
 
     public Image getImage() {
