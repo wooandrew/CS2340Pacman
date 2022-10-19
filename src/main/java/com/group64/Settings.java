@@ -35,6 +35,7 @@ public class Settings {
     private Image yellowPacman;
     private Image grayPacman;
     private Image magentaPacman;
+    private Label check3;
 
     public Settings() throws FileNotFoundException {
 
@@ -46,10 +47,11 @@ public class Settings {
         check = new Label();
         comboBox = new ComboBox<String>();
         check2 = new Label();
-        settings = new Scene(pane);
+        settings = new Scene(pane, 1200, 800);
         selectedCharacter = new ImageView(yellowPacman);
         goButton = new Button("Go Forward");
         characterSelect = new ComboBox<>();
+        check3 = new Label();
         
         yellowPacman = new Image(new FileInputStream("assets/pacmanYellow.png"));
         grayPacman = new Image(new FileInputStream("assets/pacmanGray.png"));
@@ -63,30 +65,41 @@ public class Settings {
         name.setPromptText("Enter name.");
         pane.add(name, 70, 50, 1, 1);
         pane.add(check, 70, 51, 1, 1);
-        pane.add(selectedCharacter, 72, 50, 2, 1);
+        pane.add(selectedCharacter, 72,  80, 2, 1);
+        selectedCharacter.setFitWidth(144);
+        selectedCharacter.setFitHeight(144);
+        selectedCharacter.setImage(yellowPacman);
+
+        pane.add(check3, 70, 62, 1, 1);
+        check3.setText("Character Selected: Yellow");
         //link to the combobox
 
-        pane.add(goButton, 60, 40, 2, 11);
+        pane.add(goButton, 70, 64, 2, 1);
         goButton.setVisible(false);
         goButton.setOnAction(e -> {
             //get starting stage?
             //startingstage.setScene(gameScene);
         });
 
-        pane.add(characterSelect, 40, 30, 1, 1);
+        pane.add(characterSelect, 70, 60, 2, 1);
         //add funtionality
         characterSelect.getItems().add("Yellow");
         characterSelect.getItems().add("Gray");
         characterSelect.getItems().add("Magenta");
+        characterSelect.setPromptText("Select Character");
 
         characterSelect.setOnAction(e -> {
-            if (characterSelect.getValue() == "Yellow") {
-                selectedCharacter = new ImageView(yellowPacman);
-            } else if (characterSelect.getValue() == "Magenta") {
-                selectedCharacter = new ImageView(magentaPacman);
-            } else if (characterSelect.getValue() == "Gray") {
-                selectedCharacter = new ImageView(grayPacman);
+            if (characterSelect.getValue().equals("Yellow")) {
+                selectedCharacter.setImage(yellowPacman);
+                check3.setText("Character Selected: Yellow");
+            } else if (characterSelect.getValue().equals("Magenta")) {
+                selectedCharacter.setImage(magentaPacman);
+                check3.setText("Character Selected: Magenta");
+            } else if (characterSelect.getValue().equals("Gray")) {
+                selectedCharacter.setImage(grayPacman);
+                check3.setText("Character Selected: Gray");
             }
+
         });
 
         pane.add(submit, 72, 50, 2, 1);
