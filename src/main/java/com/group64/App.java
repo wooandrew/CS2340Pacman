@@ -38,13 +38,6 @@ public class App extends Application {
         // var jfxVer = SystemInfo.javafxVersion();
         // var label = new Label("Hello, JavaFX " + jVer + ", running on Java " + jfxVer + ".");
 
-        try {
-            st = new Settings();
-        } catch (Exception e) {
-            System.out.println("FAILED TO INITIALIZE SETTINGS: " + e.getMessage());
-            Platform.exit();
-        }
-        
         mp = new Map(30);
 
         Label pacman = new Label("PACMAN");
@@ -57,11 +50,6 @@ public class App extends Application {
         start.setPrefSize(95, 25);
         start.setFont(f2);
         start.setTextFill(Color.BLACK);
-
-        Button settings = new Button("Settings");
-        settings.setPrefSize(95, 25);
-        settings.setFont(f2);
-        settings.setTextFill(Color.BLACK);
 
         Button exit = new Button("Exit");
         exit.setPrefSize(95, 25);
@@ -76,26 +64,29 @@ public class App extends Application {
         vbox.setBackground(new Background(bgFill));
         vbox.getChildren().add(pacman);
         vbox.getChildren().add(start);
-        vbox.getChildren().add(settings);
         vbox.getChildren().add(exit);
         vbox.setSpacing(30);
         vbox.setAlignment(Pos.CENTER);
-
-        Stage newWindow = new Stage();
-        newWindow.setTitle("Instructions");
 
         var scene = new Scene(vbox, 1200, 800);
         scene.setFill(Color.BLACK);
 
         start.setOnAction(event -> {
-            stage.setScene(mp.getScene());
+            stage.setScene(st.getScene());
             gm.setState(State.INGAME);
         });
-        settings.setOnAction(event -> stage.setScene(st.getScene()));
         exit.setOnAction(event -> Platform.exit());
 
         stage.setScene(scene);
         stage.setTitle(title);
+
+        try {
+            st = new Settings(stage, mp.getScene());
+        } catch (Exception e) {
+            System.out.println("FAILED TO INITIALIZE SETTINGS: " + e.getMessage());
+            Platform.exit();
+        }
+        
         
         AnimationTimer loop = new AnimationTimer() {
 
@@ -106,9 +97,6 @@ public class App extends Application {
 
                     case HOME:
                         
-
-
-
                     // Set next scene
                     // stage.setScene(class.scene)
                     break;

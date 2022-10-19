@@ -1,5 +1,6 @@
 package com.group64;
 
+import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,6 +16,8 @@ import java.io.FileNotFoundException;
 
 public class Settings {
 
+    private Scene settings;
+
     private String ign;
     private String difficulty;
     private ImageView selectedCharacter;
@@ -25,7 +28,6 @@ public class Settings {
     private Label check;
     private Label check2;
     private ComboBox<String> comboBox;
-    private Scene settings;
 
     private Button goButton;
 
@@ -37,7 +39,7 @@ public class Settings {
     private Image magentaPacman;
     private Label check3;
 
-    public Settings() throws FileNotFoundException {
+    public Settings(Stage stage, Scene nxt) throws FileNotFoundException {
 
         ign = null;
         difficulty = "easy";
@@ -63,9 +65,14 @@ public class Settings {
         pane.setHgap(5);
 
         name.setPromptText("Enter name.");
+
+        Label setName = new Label("Set Name");
+
+        pane.add(setName, 70, 49, 1, 1);
         pane.add(name, 70, 50, 1, 1);
         pane.add(check, 70, 51, 1, 1);
         pane.add(selectedCharacter, 72,  80, 2, 1);
+        
         selectedCharacter.setFitWidth(144);
         selectedCharacter.setFitHeight(144);
         selectedCharacter.setImage(yellowPacman);
@@ -77,8 +84,7 @@ public class Settings {
         pane.add(goButton, 70, 64, 2, 1);
         goButton.setVisible(false);
         goButton.setOnAction(e -> {
-            //get starting stage?
-            //startingstage.setScene(gameScene);
+            stage.setScene(nxt);
         });
 
         pane.add(characterSelect, 70, 60, 2, 1);
@@ -128,8 +134,6 @@ public class Settings {
             setDifficulty((String) comboBox.getValue());
             check2.setText("Difficulty Selected: " + difficulty);
         });
-
-        getScene();
     }
 
     public boolean badName(String str) {

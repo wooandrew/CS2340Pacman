@@ -11,7 +11,7 @@ import java.io.File;
 
 public class Map {
 
-    private Points points; //points that will be available on map
+    private Points points; // points that will be available on map
     private Scene scene;
     private GraphicsContext gc;
     private Image pac;
@@ -46,9 +46,9 @@ public class Map {
 
     public void draw(int round, int lives, int points) {
         gc.drawImage(pac, 380, 250);
-        gc.fillText("Lives: "+ lives, 20,30);
-        gc.fillText("Round "+ round, 560,30);
-        gc.fillText("Score: "+ points, 1100, 30);
+        gc.fillText("Lives: " + lives, 20, 30);
+        gc.fillText("Round " + round, 560, 30);
+        gc.fillText("Score: " + points, 1100, 30);
     }
 
     public Image getImage() {
