@@ -119,8 +119,7 @@ public class App extends Application {
                     break;
                     case INGAME:
 
-                        mp.getContext().drawImage(mp.getImage(), 0, 0);
-                        System.out.println("INGAME");
+                        mp.draw(1, 3, 0);
 
                     // Set next scene
                     // stage.setScene(class.scene)
