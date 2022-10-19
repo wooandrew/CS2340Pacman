@@ -1,6 +1,7 @@
 package com.group64;
 
 public class Character {
+    
     private int lives;
 
     public Character(int lives) {

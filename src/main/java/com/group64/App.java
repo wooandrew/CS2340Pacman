@@ -26,10 +26,7 @@ public class App extends Application {
     private GameManager gm = new GameManager(State.HOME);
     private Settings st;
     private Map mp;
-
-    void none() {
-
-    };
+    private Character player;
 
     @Override
     public void start(Stage stage) {
@@ -39,6 +36,7 @@ public class App extends Application {
         // var label = new Label("Hello, JavaFX " + jVer + ", running on Java " + jfxVer + ".");
 
         mp = new Map(30);
+        player = new Character(3);
 
         Label pacman = new Label("PACMAN");
         Font f1 = Font.font("Times New Roman", FontWeight.BOLD, 100);
@@ -107,7 +105,7 @@ public class App extends Application {
                     break;
                     case INGAME:
 
-                        mp.draw(1, 3, 0);
+                        mp.draw(gm.getCurrentRound(), player.getLives(), gm.getPointsAccumulated());
 
                     // Set next scene
                     // stage.setScene(class.scene)
