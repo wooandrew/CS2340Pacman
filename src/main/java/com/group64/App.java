@@ -15,6 +15,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import com.group64.GameManager.State;
+import com.group64.Map.Map;
 
 /**
  * JavaFX App
@@ -23,6 +24,8 @@ public class App extends Application {
 
     private String title = "Group64 Pacman";
     private GameManager gm = new GameManager(State.HOME);
+    private Settings st;
+    private Map mp;
 
     void none() {
 
@@ -35,6 +38,8 @@ public class App extends Application {
         // var jfxVer = SystemInfo.javafxVersion();
         // var label = new Label("Hello, JavaFX " + jVer + ", running on Java " + jfxVer + ".");
 
+        mp = new Map(30);
+
         Label pacman = new Label("PACMAN");
         Font f1 = Font.font("Times New Roman", FontWeight.BOLD, 100);
         Font f2 = Font.font("Times New Roman", FontWeight.BOLD, 20);
@@ -45,11 +50,6 @@ public class App extends Application {
         start.setPrefSize(95, 25);
         start.setFont(f2);
         start.setTextFill(Color.BLACK);
-
-        Button settings = new Button("Settings");
-        settings.setPrefSize(95, 25);
-        settings.setFont(f2);
-        settings.setTextFill(Color.BLACK);
 
         Button exit = new Button("Exit");
         exit.setPrefSize(95, 25);
@@ -64,45 +64,39 @@ public class App extends Application {
         vbox.setBackground(new Background(bgFill));
         vbox.getChildren().add(pacman);
         vbox.getChildren().add(start);
-        vbox.getChildren().add(settings);
         vbox.getChildren().add(exit);
         vbox.setSpacing(30);
         vbox.setAlignment(Pos.CENTER);
 
-        Stage newWindow = new Stage();
-        newWindow.setTitle("Instructions");
-
         var scene = new Scene(vbox, 1200, 800);
         scene.setFill(Color.BLACK);
 
-
-
-        
-
-
-        start.setOnAction(event -> none());
-        //settings.setOnAction((EventHandler) event -> "FAIQ and SNEH enter your code here");
+        start.setOnAction(event -> {
+            stage.setScene(st.getScene());
+            gm.setState(State.INGAME);
+        });
         exit.setOnAction(event -> Platform.exit());
-
-
 
         stage.setScene(scene);
         stage.setTitle(title);
+
+        try {
+            st = new Settings(stage, mp.getScene());
+        } catch (Exception e) {
+            System.out.println("FAILED TO INITIALIZE SETTINGS: " + e.getMessage());
+            Platform.exit();
+        }
+        
         
         AnimationTimer loop = new AnimationTimer() {
 
             @Override
             public void handle(long now) {
-                
-                gm.setState(State.GAMEOVER);
 
                 switch (gm.getState()) {
 
                     case HOME:
                         
-
-
-
                     // Set next scene
                     // stage.setScene(class.scene)
                     break;
@@ -112,6 +106,8 @@ public class App extends Application {
                     // stage.setScene(class.scene)
                     break;
                     case INGAME:
+
+                        mp.draw(1, 3, 0);
 
                     // Set next scene
                     // stage.setScene(class.scene)
