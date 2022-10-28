@@ -7,8 +7,8 @@ public class pellet {
     //initializing variables
     private Image regularPellet;
     private Image bigPellet;
-    private int pointsWorthReg;
-    private int pointsWorthBig;
+    private final int pointsWorthReg;
+    private final int pointsWorthBig;
 
     public pellet() {
         pointsWorthReg = 10;
