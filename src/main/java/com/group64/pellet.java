@@ -2,6 +2,9 @@ package com.group64;
 
 import javafx.scene.image.Image;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 public class pellet {
 
     //initializing variables
@@ -10,9 +13,12 @@ public class pellet {
     private final int pointsWorthReg;
     private final int pointsWorthBig;
 
-    public pellet() {
+    public pellet() throws FileNotFoundException {
         pointsWorthReg = 10;
         pointsWorthBig = 50;
+        regularPellet = new Image(new FileInputStream("assets/regularpeller.png"));
+        bigPellet = new Image(new FileInputStream("assets/bigpellet.png"));
+
     }
 
     //getter for the number of points a regular pellet is worth
