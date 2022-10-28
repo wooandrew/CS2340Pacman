@@ -16,8 +16,8 @@ public class pellet {
     }
 
     //getter for the number of points a regular pellet is worth
-    public int getPointsWorthReg() {return pointsWorthReg;}
+    public int getPointsWorthReg() { return pointsWorthReg; }
 
     //getter for the number of points a big pellet is worth
-    public int getPointsWorthBig() {return pointsWorthBig;}
+    public int getPointsWorthBig() { return pointsWorthBig; }
 }
