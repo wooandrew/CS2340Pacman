@@ -3,6 +3,7 @@ package com.group64;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Dimension2D;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -36,7 +37,7 @@ public class App extends Application {
         // var label = new Label("Hello, JavaFX " + jVer + ", running on Java " + jfxVer + ".");
 
         mp = new Map(30);
-        player = new Character(3);
+        player = new Character(3, new Dimension2D(20.0, 20.0), new Dimension2D(20.0, 20.0));
 
         Label pacman = new Label("PACMAN");
         Font f1 = Font.font("Times New Roman", FontWeight.BOLD, 100);
@@ -85,7 +86,7 @@ public class App extends Application {
             Platform.exit();
         }
         
-        
+
         AnimationTimer loop = new AnimationTimer() {
 
             @Override
