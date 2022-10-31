@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-abstract class Entity {
+public class Entity {
     
     protected D2D position;                         // Position in x,y coords
     protected D2D size;                             // Size of character, in pixels
