@@ -24,14 +24,16 @@ public class Map {
 
     public Map(int pnts) throws IOException {
 
+        walls = new ArrayList<>();
+
         String mapPath = "assets/Map.txt";
         BufferedReader read = new BufferedReader(new FileReader(mapPath));
-        for (int y = 0; y < 40; ++y) {
+        for (int y = 0; y < 13; ++y) {
             String currentLine = read.readLine();
             for (int i = 0; i < currentLine.length(); i++) {
                 int type = Integer.parseInt(String.valueOf(currentLine.charAt(i)));
 
-                D2D size = new D2D(16, 16);
+                D2D size = new D2D(48, 48);
                 D2D pos = new D2D(i, y);
 
                 String path;
@@ -39,13 +41,13 @@ public class Map {
                 switch (type) {
 
                     case 0:
-                        path = "nil:assets/passable.png";
+                        path = "nil:assets/passableUpdated.png";
                     break;
                     case 1:
-                        path = "wall:assets/wall.png";
+                        path = "wall:assets/wallUpdated.png";
                     break;
                     case 2:
-                        path = "portal:assets/portal.png";
+                        path = "portal:assets/portalUpdated.png";
                     break;
                     default:
                         path = "";
@@ -85,10 +87,15 @@ public class Map {
     }
 
     public void draw(int round, int lives, int points) {
-        gc.drawImage(pac, 380, 250);
+//        gc.drawImage(pac, 380, 250);
         gc.fillText("Lives: " + lives, 20, 30);
         gc.fillText("Round " + round, 560, 30);
         gc.fillText("Score: " + points, 1100, 30);
+
+        // index = row * col + col
+        for (Entity wall : walls) {
+            gc.drawImage(wall.getSprite(), wall.getPosition().getX() * 48, wall.getPosition().getY() * 48);
+        }
     }
 
     public Image getImage() {

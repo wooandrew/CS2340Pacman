@@ -15,6 +15,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import com.group64.GameManager.State;
@@ -32,7 +33,7 @@ public class App extends Application {
     private Character player;
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws IOException {
 
         // var jVer = SystemInfo.javaVersion();
         // var jfxVer = SystemInfo.javafxVersion();
