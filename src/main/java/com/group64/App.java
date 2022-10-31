@@ -3,7 +3,6 @@ package com.group64;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.geometry.Dimension2D;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -14,6 +13,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 import com.group64.GameManager.State;
 import com.group64.Map.Map;
@@ -35,9 +36,6 @@ public class App extends Application {
         // var jVer = SystemInfo.javaVersion();
         // var jfxVer = SystemInfo.javafxVersion();
         // var label = new Label("Hello, JavaFX " + jVer + ", running on Java " + jfxVer + ".");
-
-        mp = new Map(30);
-        player = new Character(3, new Dimension2D(20.0, 20.0), new Dimension2D(20.0, 20.0));
 
         Label pacman = new Label("PACMAN");
         Font f1 = Font.font("Times New Roman", FontWeight.BOLD, 100);
@@ -79,13 +77,25 @@ public class App extends Application {
         stage.setScene(scene);
         stage.setTitle(title);
 
+        mp = new Map(30);
+
+        // Initialize Player
+        D2D position = new D2D(0, 0);
+        D2D size = new D2D(20, 20);
+        ArrayList<String> imgKey = new ArrayList<String>();
+        imgKey.add("yellow:assets/pacmanYellow.png");
+        imgKey.add("gray:assets/pacmanGray.png");
+        imgKey.add("magenta:assets/pacmanMagenta.png");
+        
         try {
-            st = new Settings(stage, mp.getScene());
+            player = new Character(imgKey, position, size);
         } catch (Exception e) {
-            System.out.println("FAILED TO INITIALIZE SETTINGS: " + e.getMessage());
+            System.out.println("FATAL ERROR: FAILED TO INITIALIZE PLAYER: " + e.getMessage());
             Platform.exit();
         }
-        
+
+        // Initialize settings
+        st = new Settings(stage, mp.getScene(), player);
 
         AnimationTimer loop = new AnimationTimer() {
 

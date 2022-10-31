@@ -7,12 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 public class Settings {
 
@@ -33,13 +29,9 @@ public class Settings {
 
     private ComboBox<String> characterSelect;
 
-    // Skins
-    private Image yellowPacman;
-    private Image grayPacman;
-    private Image magentaPacman;
     private Label check3;
 
-    public Settings(Stage stage, Scene nxt) throws FileNotFoundException {
+    public Settings(Stage stage, Scene nxt, Character player) {
 
         ign = null;
         difficulty = "easy";
@@ -50,15 +42,10 @@ public class Settings {
         comboBox = new ComboBox<String>();
         check2 = new Label();
         settings = new Scene(pane, 1200, 800);
-        selectedCharacter = new ImageView(yellowPacman);
+        selectedCharacter = new ImageView();
         goButton = new Button("Go Forward");
         characterSelect = new ComboBox<>();
         check3 = new Label();
-        
-        yellowPacman = new Image(new FileInputStream("assets/pacmanYellow.png"));
-        grayPacman = new Image(new FileInputStream("assets/pacmanGray.png"));
-        magentaPacman = new Image(new FileInputStream("assets/pacmanMagenta.png"));
-        
 
         pane.setPadding(new Insets(10, 10, 10, 10));
         pane.setVgap(5);
@@ -75,7 +62,7 @@ public class Settings {
         
         selectedCharacter.setFitWidth(144);
         selectedCharacter.setFitHeight(144);
-        selectedCharacter.setImage(yellowPacman);
+        selectedCharacter.setImage(player.getSprite("yellow"));
 
         pane.add(check3, 70, 62, 1, 1);
         check3.setText("Character Selected: Yellow");
@@ -95,17 +82,9 @@ public class Settings {
         characterSelect.setPromptText("Select Character");
 
         characterSelect.setOnAction(e -> {
-            if (characterSelect.getValue().equals("Yellow")) {
-                selectedCharacter.setImage(yellowPacman);
-                check3.setText("Character Selected: Yellow");
-            } else if (characterSelect.getValue().equals("Magenta")) {
-                selectedCharacter.setImage(magentaPacman);
-                check3.setText("Character Selected: Magenta");
-            } else if (characterSelect.getValue().equals("Gray")) {
-                selectedCharacter.setImage(grayPacman);
-                check3.setText("Character Selected: Gray");
-            }
-
+            player.setSpriteKey(characterSelect.getValue().toLowerCase());
+            selectedCharacter.setImage(player.getSprite());
+            check3.setText("Character Selected: " + characterSelect.getValue());
         });
 
         pane.add(submit, 72, 50, 2, 1);
