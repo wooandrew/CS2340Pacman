@@ -21,12 +21,6 @@ public class Map {
     public Map(int pnts) {
         tileArr = new int[40][75];
 
-        for (int i = 0; i < 75; i++) {
-            for (int j = 0; j < 40; j++) {
-                System.out.print(tileArr[i][j]);
-            }
-            System.out.println("");
-        }
         
         this.points = new Points(pnts);
 
