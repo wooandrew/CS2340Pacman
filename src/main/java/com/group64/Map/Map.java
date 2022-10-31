@@ -9,7 +9,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
-import javafx.embed.swing.SwingNode;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -40,17 +39,17 @@ public class Map {
 
                 switch (type) {
 
-                    case 0:
-                        path = "nil:assets/passableUpdated.png";
+                case 0:
+                    path = "nil:assets/passableUpdated.png";
                     break;
-                    case 1:
-                        path = "wall:assets/wallUpdated.png";
+                case 1:
+                    path = "wall:assets/wallUpdated.png";
                     break;
-                    case 2:
-                        path = "portal:assets/portalUpdated.png";
+                case 2:
+                    path = "portal:assets/portalUpdated.png";
                     break;
-                    default:
-                        path = "";
+                default:
+                    path = "";
                     break;
                 }
 
@@ -59,6 +58,8 @@ public class Map {
             }
 
         }
+
+        read.close();
         
         this.points = new Points(pnts);
 
@@ -87,14 +88,16 @@ public class Map {
     }
 
     public void draw(int round, int lives, int points) {
-//        gc.drawImage(pac, 380, 250);
+
         gc.fillText("Lives: " + lives, 20, 30);
         gc.fillText("Round " + round, 560, 30);
         gc.fillText("Score: " + points, 1100, 30);
 
         // index = row * col + col
         for (Entity wall : walls) {
-            gc.drawImage(wall.getSprite(), wall.getPosition().getX() * 48, wall.getPosition().getY() * 48);
+            int x = wall.getPosition().getX() * 48;
+            int y = wall.getPosition().getY() * 48;
+            gc.drawImage(wall.getSprite(), x, y);
         }
     }
 
