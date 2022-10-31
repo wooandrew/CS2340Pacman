@@ -12,6 +12,7 @@ public class pellet {
     private Image bigPellet;
     private final int pointsWorthReg;
     private final int pointsWorthBig;
+    //create an arraylist of ImageView objects that holds all of the pellets on the map
 
     public pellet() throws FileNotFoundException {
         pointsWorthReg = 10;
