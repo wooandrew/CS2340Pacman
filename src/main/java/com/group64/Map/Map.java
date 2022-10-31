@@ -23,7 +23,6 @@ public class Map {
     private ArrayList<Entity> walls;
 
     public Map(int pnts) throws IOException {
-        tileArr = new int[40][75];
 
         String mapPath = "assets/Map.txt";
         BufferedReader read = new BufferedReader(new FileReader(mapPath));
@@ -58,24 +57,6 @@ public class Map {
             }
 
         }
-
-        for (int y = 0; y < 40; ++y) {
-
-            for (int x = 0; x < 75; ++x) {
-
-                // index = 75 * row + x
-
-
-                
-                D2D size = new D2D(16, 16);
-                D2D pos = new D2D(x, y);
-                Entity wall = new Entity(, pos, size);
-                walls.add(wall);
-            }
-        }
-
-
-
         
         this.points = new Points(pnts);
 
