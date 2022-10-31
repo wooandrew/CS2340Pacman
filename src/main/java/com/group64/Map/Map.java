@@ -6,6 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.embed.swing.SwingNode;
 
 import java.io.File;
 
@@ -15,8 +16,11 @@ public class Map {
     private Scene scene;
     private GraphicsContext gc;
     private Image pac;
+    private int[][] tileArr;
 
     public Map(int pnts) {
+        tileArr = new int[40][75];
+
         
         this.points = new Points(pnts);
 
