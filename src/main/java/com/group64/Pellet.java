@@ -1,11 +1,6 @@
 package com.group64;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 public class Pellet extends Entity {
 
