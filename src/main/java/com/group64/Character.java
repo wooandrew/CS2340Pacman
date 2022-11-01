@@ -1,19 +1,14 @@
 package com.group64;
 
-import javafx.geometry.Dimension2D;
-import javafx.scene.image.Image;
+import java.util.ArrayList;
+import java.io.FileNotFoundException;
 
-public class Character {
+public class Character extends Entity {
     
-    private int lives;                      // Number of lives player has
-    private Dimension2D position;           // Position in x,y coords
-    private Dimension2D size;               // Size of character, in pixels
-    private Image[] sprites;                // Array of character sprites
+    private int lives;          // Number of lives player has
 
-    public Character(int lives, Dimension2D pos, Dimension2D size) {
-        this.lives = lives;
-        this.position = pos;
-        this.size = size;
+    public Character(ArrayList<String> sprites, D2D pos, D2D size) throws FileNotFoundException {
+        super(sprites, pos, size);
     }
 
     public int getLives() {
