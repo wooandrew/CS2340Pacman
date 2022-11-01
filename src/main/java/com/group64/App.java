@@ -14,6 +14,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import com.group64.GameManager.State;
 import com.group64.Map.Map;
 
@@ -29,14 +32,11 @@ public class App extends Application {
     private Character player;
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws IOException {
 
         // var jVer = SystemInfo.javaVersion();
         // var jfxVer = SystemInfo.javafxVersion();
         // var label = new Label("Hello, JavaFX " + jVer + ", running on Java " + jfxVer + ".");
-
-        mp = new Map(30);
-        player = new Character(3);
 
         Label pacman = new Label("PACMAN");
         Font f1 = Font.font("Times New Roman", FontWeight.BOLD, 100);
@@ -78,14 +78,26 @@ public class App extends Application {
         stage.setScene(scene);
         stage.setTitle(title);
 
+        mp = new Map(30);
+
+        // Initialize Player
+        D2D position = new D2D(0, 0);
+        D2D size = new D2D(20, 20);
+        ArrayList<String> imgKey = new ArrayList<String>();
+        imgKey.add("yellow:assets/pacmanYellow.png");
+        imgKey.add("gray:assets/pacmanGray.png");
+        imgKey.add("magenta:assets/pacmanMagenta.png");
+        
         try {
-            st = new Settings(stage, mp.getScene());
+            player = new Character(imgKey, position, size);
         } catch (Exception e) {
-            System.out.println("FAILED TO INITIALIZE SETTINGS: " + e.getMessage());
+            System.out.println("FATAL ERROR: FAILED TO INITIALIZE PLAYER: " + e.getMessage());
             Platform.exit();
         }
-        
-        
+
+        // Initialize settings
+        st = new Settings(stage, mp.getScene(), player);
+
         AnimationTimer loop = new AnimationTimer() {
 
             @Override
