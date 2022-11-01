@@ -15,14 +15,29 @@ public class Entity {
     protected String spriteKey;                     // Key for chosen sprite
     protected HashMap<String, Image> sprites;       // Map of available sprites for this entity
 
-    public Entity(ArrayList<String> imgKey, D2D pos, D2D size) throws FileNotFoundException {
+    public Entity(String imgKey, D2D pos, D2D size) throws FileNotFoundException {
+
+        this.position = pos;
+        this.size = size;
+
+        sprites = new HashMap<String, Image>();
+
+        String key = imgKey.split(":")[0];
+        String path = imgKey.split(":")[1];
+
+        sprites.put(key, new Image(new FileInputStream(path)));
+
+        spriteKey = key;
+    }
+
+    public Entity(ArrayList<String> imgKeys, D2D pos, D2D size) throws FileNotFoundException {
         
         this.position = pos;
         this.size = size;
 
         sprites = new HashMap<String, Image>();
 
-        for (String iKey : imgKey) {
+        for (String iKey : imgKeys) {
 
             String key = iKey.split(":")[0];
             String path = iKey.split(":")[1];
@@ -31,7 +46,7 @@ public class Entity {
         }
 
         // Sprite key defaults to first sprite in imgKey
-        spriteKey = imgKey.get(0).split(":")[0];
+        spriteKey = imgKeys.get(0).split(":")[0];
     }
 
     public void update(Entity[] entities) {
