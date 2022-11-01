@@ -19,8 +19,16 @@ public class D2D {
         return x;
     }
 
+    public void setX(int X) {
+        this.x = X;
+    }
+
     public int getY() {
         return y;
+    }
+
+    public void setY(int Y) {
+        this.x = Y;
     }
 
     public int getWidth() {
