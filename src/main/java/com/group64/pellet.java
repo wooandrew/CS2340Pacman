@@ -7,7 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-public class pellet {
+public class Pellet extends Entity{
 
     //initializing variables
     private Image regularPellet;
@@ -18,7 +18,7 @@ public class pellet {
     private ArrayList<ImageView> big;
     //create an arraylist of ImageView objects that holds all of the pellets on the map
 
-    public pellet() throws FileNotFoundException {
+    public Pellet() throws FileNotFoundException {
         pointsWorthReg = 10;
         pointsWorthBig = 50;
         regularPellet = new Image(new FileInputStream("assets/regularpeller.png"));
@@ -28,9 +28,15 @@ public class pellet {
 
     }
 
+    //placing both pellets and adding it to the
+
     //getter for the number of points a regular pellet is worth
-    public int getPointsWorthReg() { return pointsWorthReg; }
+    public int getPointsWorthReg() {
+        return pointsWorthReg;
+    }
 
     //getter for the number of points a big pellet is worth
-    public int getPointsWorthBig() { return pointsWorthBig; }
+    public int getPointsWorthBig() {
+        return pointsWorthBig;
+    }
 }
