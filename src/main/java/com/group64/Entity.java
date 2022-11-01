@@ -57,7 +57,7 @@ public class Entity {
         }
     }
 
-    private Boolean collisionDetection(Entity ent) {
+    protected Boolean collisionDetection(Entity ent) {
 
         if (ent.getPosition().getX() < position.getX() + size.getWidth()
             && ent.getPosition().getX() + ent.getSize().getWidth() > position.getX() 
