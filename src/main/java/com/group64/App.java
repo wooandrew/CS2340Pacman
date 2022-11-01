@@ -14,6 +14,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 import com.group64.GameManager.State;
 import com.group64.Map.Map;
 
@@ -29,14 +32,11 @@ public class App extends Application {
     private Character player;
 
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws IOException {
 
         // var jVer = SystemInfo.javaVersion();
         // var jfxVer = SystemInfo.javafxVersion();
         // var label = new Label("Hello, JavaFX " + jVer + ", running on Java " + jfxVer + ".");
-
-        mp = new Map(30);
-        player = new Character(3);
 
         Label pacman = new Label("PACMAN");
         Font f1 = Font.font("Times New Roman", FontWeight.BOLD, 100);
@@ -78,14 +78,42 @@ public class App extends Application {
         stage.setScene(scene);
         stage.setTitle(title);
 
+        mp = new Map(30);
+
+        // Initialize Player
+        D2D position = new D2D(500, 400);
+        D2D size = new D2D(16, 16);
+        ArrayList<String> imgKey = new ArrayList<String>();
+        imgKey.add("yellow:assets/pacmanYellow.png");
+        imgKey.add("gray:assets/pacmanGray.png");
+        imgKey.add("magenta:assets/pacmanMagenta.png");
+        
         try {
-            st = new Settings(stage, mp.getScene());
+            player = new Character(imgKey, position, size);
         } catch (Exception e) {
-            System.out.println("FAILED TO INITIALIZE SETTINGS: " + e.getMessage());
+            System.out.println("FATAL ERROR: FAILED TO INITIALIZE PLAYER: " + e.getMessage());
             Platform.exit();
         }
-        
-        
+
+        ArrayList<Pellet> pellets = new ArrayList<>();
+
+        String bigPelletKey = "big:assets/bigpellet.png";
+        String regPelletKey = "regular:assets/regularpellet.png";
+
+        pellets.add(new Pellet(bigPelletKey, new D2D(72, 72), new D2D(12, 12)));
+        pellets.add(new Pellet(bigPelletKey, new D2D(72, 552), new D2D(12, 12)));
+        pellets.add(new Pellet(bigPelletKey, new D2D(1105, 72), new D2D(12, 12)));
+        pellets.add(new Pellet(bigPelletKey, new D2D(1105, 552), new D2D(12, 12)));
+        pellets.add(new Pellet(regPelletKey, new D2D(118, 72), new D2D(8, 8)));
+        pellets.add(new Pellet(regPelletKey, new D2D(165, 72), new D2D(8, 8)));
+        pellets.add(new Pellet(regPelletKey, new D2D(212, 72), new D2D(8, 8)));
+        pellets.add(new Pellet(regPelletKey, new D2D(259, 72), new D2D(8, 8)));
+        pellets.add(new Pellet(regPelletKey, new D2D(306, 72), new D2D(8, 8)));
+        pellets.add(new Pellet(regPelletKey, new D2D(353, 72), new D2D(8, 8)));
+
+        // Initialize settings
+        st = new Settings(stage, mp.getScene(), player);
+
         AnimationTimer loop = new AnimationTimer() {
 
             @Override
@@ -105,7 +133,19 @@ public class App extends Application {
                     break;
                     case INGAME:
 
-                        mp.draw(gm.getCurrentRound(), player.getLives(), gm.getPointsAccumulated());
+                    // Clear screen
+                    mp.getContext().clearRect(0, 0, 1200, 800);
+                    
+                    // Update entities
+                    player.update(stage.getScene(), mp.getWalls(), pellets);
+
+                    // Draw
+                    mp.draw(gm.getCurrentRound(), player.getLives(), player.getScore());
+                    player.draw(mp.getContext());
+                    for (Pellet pellet : pellets) {
+                        pellet.draw(mp.getContext());
+                    }
+
 
                     // Set next scene
                     // stage.setScene(class.scene)

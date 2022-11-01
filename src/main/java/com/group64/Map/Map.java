@@ -1,5 +1,8 @@
 package com.group64.Map;
 
+import com.group64.Entity;
+import com.group64.D2D;
+
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -7,7 +10,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
-import java.io.File;
+import java.io.*;
+import java.util.ArrayList;
 
 public class Map {
 
@@ -15,8 +19,47 @@ public class Map {
     private Scene scene;
     private GraphicsContext gc;
     private Image pac;
+    private ArrayList<Entity> walls;
 
-    public Map(int pnts) {
+    public Map(int pnts) throws IOException {
+
+        walls = new ArrayList<>();
+
+        String mapPath = "assets/Map.txt";
+        BufferedReader read = new BufferedReader(new FileReader(mapPath));
+        for (int y = 0; y < 13; ++y) {
+            String currentLine = read.readLine();
+            for (int i = 0; i < currentLine.length(); i++) {
+                int type = Integer.parseInt(String.valueOf(currentLine.charAt(i)));
+
+                D2D size = new D2D(48, 48);
+                D2D pos = new D2D(i * 48, y * 48);
+
+                String path;
+
+                switch (type) {
+
+                case 0:
+                    path = "nil:assets/passableUpdated.png";
+                    break;
+                case 1:
+                    path = "wall:assets/wallUpdated.png";
+                    break;
+                case 2:
+                    path = "portal:assets/portalUpdated.png";
+                    break;
+                default:
+                    path = "";
+                    break;
+                }
+
+                Entity wall = new Entity(path, pos, size);
+                walls.add(wall);
+            }
+
+        }
+
+        read.close();
         
         this.points = new Points(pnts);
 
@@ -35,6 +78,21 @@ public class Map {
         scene = new Scene(root, 1200, 800);
     }
 
+    public void draw(int round, int lives, int points) {
+
+        // index = row * col + col
+        for (Entity wall : walls) {
+            int x = wall.getPosition().getX();
+            int y = wall.getPosition().getY();
+            gc.drawImage(wall.getSprite(), x, y);
+        }
+
+        // Draw info
+        gc.fillText("Lives: " + lives, 20, 30);
+        gc.fillText("Round " + round, 560, 30);
+        gc.fillText("Score: " + points, 1100, 30);
+    }
+
     // Getters
     public Points getPoints() {
         return points;
@@ -44,18 +102,15 @@ public class Map {
         return scene;
     }
 
-    public void draw(int round, int lives, int points) {
-        gc.drawImage(pac, 380, 250);
-        gc.fillText("Lives: " + lives, 20, 30);
-        gc.fillText("Round " + round, 560, 30);
-        gc.fillText("Score: " + points, 1100, 30);
-    }
-
     public Image getImage() {
         return pac;
     }
 
     public GraphicsContext getContext() {
         return gc;
+    }
+
+    public ArrayList<Entity> getWalls() {
+        return walls;
     }
 }
