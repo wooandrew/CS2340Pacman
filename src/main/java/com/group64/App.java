@@ -96,16 +96,20 @@ public class App extends Application {
         }
 
         ArrayList<Pellet> pellets = new ArrayList<>();
-        pellets.add(new Pellet("big:assets/bigpellet.png", new D2D(72, 72), new D2D(12, 12)));
-        pellets.add(new Pellet("big:assets/bigpellet.png", new D2D(72, 552), new D2D(12, 12)));
-        pellets.add(new Pellet("big:assets/bigpellet.png", new D2D(1105, 72), new D2D(12, 12)));
-        pellets.add(new Pellet("big:assets/bigpellet.png", new D2D(1105, 552), new D2D(12, 12)));
-        pellets.add(new Pellet("regular:assets/regularpellet.png", new D2D(118, 72), new D2D(8, 8)));
-        pellets.add(new Pellet("regular:assets/regularpellet.png", new D2D(165, 72), new D2D(8, 8)));
-        pellets.add(new Pellet("regular:assets/regularpellet.png", new D2D(212, 72), new D2D(8, 8)));
-        pellets.add(new Pellet("regular:assets/regularpellet.png", new D2D(259, 72), new D2D(8, 8)));
-        pellets.add(new Pellet("regular:assets/regularpellet.png", new D2D(306, 72), new D2D(8, 8)));
-        pellets.add(new Pellet("regular:assets/regularpellet.png", new D2D(353, 72), new D2D(8, 8)));
+
+        String bigPelletKey = "big:assets/bigpellet.png";
+        String regPelletKey = "regular:assets/regularpellet.png";
+
+        pellets.add(new Pellet(bigPelletKey, new D2D(72, 72), new D2D(12, 12)));
+        pellets.add(new Pellet(bigPelletKey, new D2D(72, 552), new D2D(12, 12)));
+        pellets.add(new Pellet(bigPelletKey, new D2D(1105, 72), new D2D(12, 12)));
+        pellets.add(new Pellet(bigPelletKey, new D2D(1105, 552), new D2D(12, 12)));
+        pellets.add(new Pellet(regPelletKey, new D2D(118, 72), new D2D(8, 8)));
+        pellets.add(new Pellet(regPelletKey, new D2D(165, 72), new D2D(8, 8)));
+        pellets.add(new Pellet(regPelletKey, new D2D(212, 72), new D2D(8, 8)));
+        pellets.add(new Pellet(regPelletKey, new D2D(259, 72), new D2D(8, 8)));
+        pellets.add(new Pellet(regPelletKey, new D2D(306, 72), new D2D(8, 8)));
+        pellets.add(new Pellet(regPelletKey, new D2D(353, 72), new D2D(8, 8)));
 
         // Initialize settings
         st = new Settings(stage, mp.getScene(), player);
