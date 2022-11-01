@@ -81,8 +81,8 @@ public class App extends Application {
         mp = new Map(30);
 
         // Initialize Player
-        D2D position = new D2D(0, 0);
-        D2D size = new D2D(20, 20);
+        D2D position = new D2D(500, 400);
+        D2D size = new D2D(16, 16);
         ArrayList<String> imgKey = new ArrayList<String>();
         imgKey.add("yellow:assets/pacmanYellow.png");
         imgKey.add("gray:assets/pacmanGray.png");
@@ -94,6 +94,18 @@ public class App extends Application {
             System.out.println("FATAL ERROR: FAILED TO INITIALIZE PLAYER: " + e.getMessage());
             Platform.exit();
         }
+
+        ArrayList<Pellet> pellets = new ArrayList<>();
+        pellets.add(new Pellet("big:assets/bigpellet.png", new D2D(72, 72), new D2D(12, 12)));
+        pellets.add(new Pellet("big:assets/bigpellet.png", new D2D(72, 552), new D2D(12, 12)));
+        pellets.add(new Pellet("big:assets/bigpellet.png", new D2D(1105, 72), new D2D(12, 12)));
+        pellets.add(new Pellet("big:assets/bigpellet.png", new D2D(1105, 552), new D2D(12, 12)));
+        pellets.add(new Pellet("regular:assets/regularpellet.png", new D2D(118, 72), new D2D(8, 8)));
+        pellets.add(new Pellet("regular:assets/regularpellet.png", new D2D(165, 72), new D2D(8, 8)));
+        pellets.add(new Pellet("regular:assets/regularpellet.png", new D2D(212, 72), new D2D(8, 8)));
+        pellets.add(new Pellet("regular:assets/regularpellet.png", new D2D(259, 72), new D2D(8, 8)));
+        pellets.add(new Pellet("regular:assets/regularpellet.png", new D2D(306, 72), new D2D(8, 8)));
+        pellets.add(new Pellet("regular:assets/regularpellet.png", new D2D(353, 72), new D2D(8, 8)));
 
         // Initialize settings
         st = new Settings(stage, mp.getScene(), player);
@@ -117,7 +129,19 @@ public class App extends Application {
                     break;
                     case INGAME:
 
-                        mp.draw(gm.getCurrentRound(), player.getLives(), gm.getPointsAccumulated());
+                    // Clear screen
+                    mp.getContext().clearRect(0, 0, 1200, 800);
+                    
+                    // Update entities
+                    player.update(stage.getScene(), mp.getWalls(), pellets);
+
+                    // Draw
+                    mp.draw(gm.getCurrentRound(), player.getLives(), player.getScore());
+                    player.draw(mp.getContext());
+                    for (Pellet pellet : pellets) {
+                        pellet.draw(mp.getContext());
+                    }
+
 
                     // Set next scene
                     // stage.setScene(class.scene)

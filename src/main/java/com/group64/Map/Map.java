@@ -33,7 +33,7 @@ public class Map {
                 int type = Integer.parseInt(String.valueOf(currentLine.charAt(i)));
 
                 D2D size = new D2D(48, 48);
-                D2D pos = new D2D(i, y);
+                D2D pos = new D2D(i * 48, y * 48);
 
                 String path;
 
@@ -78,6 +78,21 @@ public class Map {
         scene = new Scene(root, 1200, 800);
     }
 
+    public void draw(int round, int lives, int points) {
+
+        // index = row * col + col
+        for (Entity wall : walls) {
+            int x = wall.getPosition().getX();
+            int y = wall.getPosition().getY();
+            gc.drawImage(wall.getSprite(), x, y);
+        }
+
+        // Draw info
+        gc.fillText("Lives: " + lives, 20, 30);
+        gc.fillText("Round " + round, 560, 30);
+        gc.fillText("Score: " + points, 1100, 30);
+    }
+
     // Getters
     public Points getPoints() {
         return points;
@@ -87,25 +102,15 @@ public class Map {
         return scene;
     }
 
-    public void draw(int round, int lives, int points) {
-
-        gc.fillText("Lives: " + lives, 20, 30);
-        gc.fillText("Round " + round, 560, 30);
-        gc.fillText("Score: " + points, 1100, 30);
-
-        // index = row * col + col
-        for (Entity wall : walls) {
-            int x = wall.getPosition().getX() * 48;
-            int y = wall.getPosition().getY() * 48;
-            gc.drawImage(wall.getSprite(), x, y);
-        }
-    }
-
     public Image getImage() {
         return pac;
     }
 
     public GraphicsContext getContext() {
         return gc;
+    }
+
+    public ArrayList<Entity> getWalls() {
+        return walls;
     }
 }

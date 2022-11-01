@@ -15,20 +15,22 @@ public class D2D {
         this.y = y;
     }
 
+    // Setters
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    // Getters
     public int getX() {
         return x;
     }
 
-    public void setX(int X) {
-        this.x = X;
-    }
-
     public int getY() {
         return y;
-    }
-
-    public void setY(int Y) {
-        this.x = Y;
     }
 
     public int getWidth() {

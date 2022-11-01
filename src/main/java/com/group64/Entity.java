@@ -1,5 +1,6 @@
 package com.group64;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.util.HashMap;
@@ -55,6 +56,10 @@ public class Entity {
         for (Entity ent : entities) {
             collisionDetection(ent);
         }
+    }
+
+    public void draw(GraphicsContext gc) {
+        gc.drawImage(getSprite(), position.getX(), position.getY());
     }
 
     protected Boolean collisionDetection(Entity ent) {
