@@ -95,6 +95,9 @@ public class App extends Application {
             Platform.exit();
         }
 
+        // Creating the Ghosts
+
+
         ArrayList<Pellet> pellets = new ArrayList<>();
 
         String bigPelletKey = "big:assets/bigpellet.png";
@@ -110,6 +113,14 @@ public class App extends Application {
         pellets.add(new Pellet(regPelletKey, new D2D(259, 72), new D2D(8, 8)));
         pellets.add(new Pellet(regPelletKey, new D2D(306, 72), new D2D(8, 8)));
         pellets.add(new Pellet(regPelletKey, new D2D(353, 72), new D2D(8, 8)));
+
+//        ArrayList<Ghost> ghosts = new ArrayList<>();
+//
+//        ghosts.add(new Ghost());
+//        ghosts.add(new Ghost());
+//        ghosts.add(new Ghost());
+//        ghosts.add(new Ghost());
+
 
         // Initialize settings
         st = new Settings(stage, mp.getScene(), player);
