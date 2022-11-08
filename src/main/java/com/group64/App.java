@@ -30,6 +30,11 @@ public class App extends Application {
     private Settings st;
     private Map mp;
     private Character player;
+    private Ghost red;
+    private Ghost tan;
+    private Ghost green;
+    private Ghost yellow;
+
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -81,7 +86,7 @@ public class App extends Application {
         mp = new Map(30);
 
         // Initialize Player
-        D2D position = new D2D(500, 400);
+        D2D position = new D2D(576, 576);
         D2D size = new D2D(32, 32);
         ArrayList<String> imgKey = new ArrayList<String>();
         imgKey.add("yellow:assets/pacmanYellow.png");
@@ -114,18 +119,15 @@ public class App extends Application {
         pellets.add(new Pellet(regPelletKey, new D2D(306, 72), new D2D(8, 8)));
         pellets.add(new Pellet(regPelletKey, new D2D(353, 72), new D2D(8, 8)));
 
-        ArrayList<Ghost> ghosts = new ArrayList<>();
-
         String ghostRed = "Red:assets/redGhost.png";
         String ghostYellow = "Yellow:assets/yellowGhost.png";
         String ghostTan = "Tan:assets/tanGhost.png";
         String ghostGreen = "Green:assets/greenGhost.png";
 
-        ghosts.add(new Ghost(ghostRed, new D2D(600, 400), new D2D(32, 32)));
-        ghosts.add(new Ghost(ghostYellow, new D2D(700, 400), new D2D(32, 32)));
-        ghosts.add(new Ghost(ghostTan, new D2D(500, 400), new D2D(32, 32)));
-        ghosts.add(new Ghost(ghostGreen, new D2D(800, 400), new D2D(32, 32)));
-
+        red = new Ghost(ghostRed, new D2D(544, 384), new D2D(32, 32));
+        yellow = new Ghost(ghostYellow, new D2D(576, 384), new D2D(32, 32));
+        tan = new Ghost(ghostTan, new D2D(608, 384), new D2D(32, 32));
+        green = new Ghost(ghostGreen, new D2D(640, 384), new D2D(32, 32));
 
         // Initialize settings
         st = new Settings(stage, mp.getScene(), player);
@@ -158,6 +160,10 @@ public class App extends Application {
                     // Draw
                     mp.draw(gm.getCurrentRound(), player.getLives(), player.getScore());
                     player.draw(mp.getContext());
+                    red.draw(mp.getContext());
+                    yellow.draw(mp.getContext());
+                    tan.draw(mp.getContext());
+                    green.draw(mp.getContext());
                     for (Pellet pellet : pellets) {
                         pellet.draw(mp.getContext());
                     }
