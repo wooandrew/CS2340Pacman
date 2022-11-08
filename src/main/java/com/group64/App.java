@@ -66,7 +66,7 @@ public class App extends Application {
         vbox.setSpacing(30);
         vbox.setAlignment(Pos.CENTER);
 
-        var scene = new Scene(vbox, 1200, 800);
+        var scene = new Scene(vbox, 1184, 800);
         scene.setFill(Color.BLACK);
 
         start.setOnAction(event -> {
@@ -82,7 +82,7 @@ public class App extends Application {
 
         // Initialize Player
         D2D position = new D2D(500, 400);
-        D2D size = new D2D(16, 16);
+        D2D size = new D2D(32, 32);
         ArrayList<String> imgKey = new ArrayList<String>();
         imgKey.add("yellow:assets/pacmanYellow.png");
         imgKey.add("gray:assets/pacmanGray.png");
@@ -114,12 +114,17 @@ public class App extends Application {
         pellets.add(new Pellet(regPelletKey, new D2D(306, 72), new D2D(8, 8)));
         pellets.add(new Pellet(regPelletKey, new D2D(353, 72), new D2D(8, 8)));
 
-//        ArrayList<Ghost> ghosts = new ArrayList<>();
-//
-//        ghosts.add(new Ghost());
-//        ghosts.add(new Ghost());
-//        ghosts.add(new Ghost());
-//        ghosts.add(new Ghost());
+        ArrayList<Ghost> ghosts = new ArrayList<>();
+
+        String ghostRed = "Red:assets/redGhost.png";
+        String ghostYellow = "Yellow:assets/yellowGhost.png";
+        String ghostTan = "Tan:assets/tanGhost.png";
+        String ghostGreen = "Green:assets/greenGhost.png";
+
+        ghosts.add(new Ghost(ghostRed, new D2D(600, 400), new D2D(32, 32)));
+        ghosts.add(new Ghost(ghostYellow, new D2D(700, 400), new D2D(32, 32)));
+        ghosts.add(new Ghost(ghostTan, new D2D(500, 400), new D2D(32, 32)));
+        ghosts.add(new Ghost(ghostGreen, new D2D(800, 400), new D2D(32, 32)));
 
 
         // Initialize settings
@@ -145,7 +150,7 @@ public class App extends Application {
                     case INGAME:
 
                     // Clear screen
-                    mp.getContext().clearRect(0, 0, 1200, 800);
+                    mp.getContext().clearRect(0, 0, 1184, 800);
                     
                     // Update entities
                     player.update(stage.getScene(), mp.getWalls(), pellets);

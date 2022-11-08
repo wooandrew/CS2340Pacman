@@ -64,7 +64,7 @@ public class Map {
         this.points = new Points(pnts);
 
         StackPane root = new StackPane();
-        Canvas canvas = new Canvas(1200, 800);
+        Canvas canvas = new Canvas(1184, 800);
         gc = canvas.getGraphicsContext2D();
 
         String stream = "assets/maze.png";
@@ -75,7 +75,7 @@ public class Map {
         image.resize(0, 0);
         
         root.getChildren().add(canvas);
-        scene = new Scene(root, 1200, 800);
+        scene = new Scene(root, 1184, 800);
     }
 
     public void draw(int round, int lives, int points) {
