@@ -27,13 +27,13 @@ public class Map {
 
         String mapPath = "assets/Map.txt";
         BufferedReader read = new BufferedReader(new FileReader(mapPath));
-        for (int y = 0; y < 13; ++y) {
+        for (int y = 0; y < 25; ++y) {
             String currentLine = read.readLine();
             for (int i = 0; i < currentLine.length(); i++) {
                 int type = Integer.parseInt(String.valueOf(currentLine.charAt(i)));
 
-                D2D size = new D2D(48, 48);
-                D2D pos = new D2D(i * 48, y * 48);
+                D2D size = new D2D(32, 32);
+                D2D pos = new D2D(i * 32, y * 32);
 
                 String path;
 
@@ -64,7 +64,7 @@ public class Map {
         this.points = new Points(pnts);
 
         StackPane root = new StackPane();
-        Canvas canvas = new Canvas(1200, 800);
+        Canvas canvas = new Canvas(1184, 800);
         gc = canvas.getGraphicsContext2D();
 
         String stream = "assets/maze.png";
@@ -75,7 +75,7 @@ public class Map {
         image.resize(0, 0);
         
         root.getChildren().add(canvas);
-        scene = new Scene(root, 1200, 800);
+        scene = new Scene(root, 1184, 800);
     }
 
     public void draw(int round, int lives, int points) {

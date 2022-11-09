@@ -30,6 +30,11 @@ public class App extends Application {
     private Settings st;
     private Map mp;
     private Character player;
+    private Ghost redGhost;
+    private Ghost tanGhost;
+    private Ghost greenGhost;
+    private Ghost yellowGhost;
+
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -66,7 +71,7 @@ public class App extends Application {
         vbox.setSpacing(30);
         vbox.setAlignment(Pos.CENTER);
 
-        var scene = new Scene(vbox, 1200, 800);
+        var scene = new Scene(vbox, 1184, 800);
         scene.setFill(Color.BLACK);
 
         start.setOnAction(event -> {
@@ -81,8 +86,8 @@ public class App extends Application {
         mp = new Map(30);
 
         // Initialize Player
-        D2D position = new D2D(500, 400);
-        D2D size = new D2D(16, 16);
+        D2D position = new D2D(576, 576);
+        D2D size = new D2D(32, 32);
         ArrayList<String> imgKey = new ArrayList<String>();
         imgKey.add("yellow:assets/pacmanYellow.png");
         imgKey.add("gray:assets/pacmanGray.png");
@@ -94,6 +99,9 @@ public class App extends Application {
             System.out.println("FATAL ERROR: FAILED TO INITIALIZE PLAYER: " + e.getMessage());
             Platform.exit();
         }
+
+        // Creating the Ghosts
+
 
         ArrayList<Pellet> pellets = new ArrayList<>();
 
@@ -110,6 +118,16 @@ public class App extends Application {
         pellets.add(new Pellet(regPelletKey, new D2D(259, 72), new D2D(8, 8)));
         pellets.add(new Pellet(regPelletKey, new D2D(306, 72), new D2D(8, 8)));
         pellets.add(new Pellet(regPelletKey, new D2D(353, 72), new D2D(8, 8)));
+
+        String ghostRedPath = "Red:assets/redGhost.png";
+        String ghostYellowPath = "Yellow:assets/yellowGhost.png";
+        String ghostTanPath = "Tan:assets/tanGhost.png";
+        String ghostGreenPath = "Green:assets/greenGhost.png";
+
+        redGhost = new Ghost(ghostRedPath, new D2D(544, 384), new D2D(32, 32));
+        yellowGhost = new Ghost(ghostYellowPath, new D2D(576, 384), new D2D(32, 32));
+        tanGhost = new Ghost(ghostTanPath, new D2D(608, 384), new D2D(32, 32));
+        greenGhost = new Ghost(ghostGreenPath, new D2D(640, 384), new D2D(32, 32));
 
         // Initialize settings
         st = new Settings(stage, mp.getScene(), player);
@@ -134,7 +152,7 @@ public class App extends Application {
                     case INGAME:
 
                     // Clear screen
-                    mp.getContext().clearRect(0, 0, 1200, 800);
+                    mp.getContext().clearRect(0, 0, 1184, 800);
                     
                     // Update entities
                     player.update(stage.getScene(), mp.getWalls(), pellets);
@@ -142,6 +160,10 @@ public class App extends Application {
                     // Draw
                     mp.draw(gm.getCurrentRound(), player.getLives(), player.getScore());
                     player.draw(mp.getContext());
+                    redGhost.draw(mp.getContext());
+                    yellowGhost.draw(mp.getContext());
+                    tanGhost.draw(mp.getContext());
+                    greenGhost.draw(mp.getContext());
                     for (Pellet pellet : pellets) {
                         pellet.draw(mp.getContext());
                     }
