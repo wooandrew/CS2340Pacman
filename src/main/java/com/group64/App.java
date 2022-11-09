@@ -35,7 +35,6 @@ public class App extends Application {
     private Ghost greenGhost;
     private Ghost yellowGhost;
 
-
     @Override
     public void start(Stage stage) throws IOException {
 
@@ -101,8 +100,6 @@ public class App extends Application {
         }
 
         // Creating the Ghosts
-
-
         ArrayList<Pellet> pellets = new ArrayList<>();
 
         String bigPelletKey = "big:assets/bigpellet.png";
@@ -168,12 +165,10 @@ public class App extends Application {
                         pellet.draw(mp.getContext());
                     }
 
-
                     // Set next scene
                     // stage.setScene(class.scene)
                     break;
                     case GAMEOVER:
-
                     // Set next scene
                     // stage.setScene(class.scene)
                     break;

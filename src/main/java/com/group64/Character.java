@@ -123,8 +123,8 @@ public class Character extends Entity {
         }
         //collision check for pellets
         for (int x = 0; x < pellets.size(); ++x) {
-            boolean isCollision = collisionDetection(pellets.get(x));
-            if (isCollision) { // collision happens
+
+            if (collisionDetection(pellets.get(x))) { // collision happens
                 score += pellets.get(x).getPointsWorth();
                 pellets.remove(x);
             }
