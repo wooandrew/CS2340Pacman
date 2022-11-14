@@ -5,9 +5,11 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -42,29 +44,38 @@ public class App extends Application {
         // var jfxVer = SystemInfo.javafxVersion();
         // var label = new Label("Hello, JavaFX " + jVer + ", running on Java " + jfxVer + ".");
 
-        Label pacman = new Label("PACMAN");
+        //Label pacman = new Label("PACMAN");
         Font f1 = Font.font("Times New Roman", FontWeight.BOLD, 100);
         Font f2 = Font.font("Times New Roman", FontWeight.BOLD, 20);
-        pacman.setFont(f1);
-        pacman.setTextFill(Color.RED);
-        
+        //pacman.setFont(f1);
+        //pacman.setTextFill(Color.RED);
+
         Button start = new Button("Start");
         start.setPrefSize(95, 25);
         start.setFont(f2);
-        start.setTextFill(Color.BLACK);
+        start.setStyle("-fx-background-color: #778899");
+        start.setTextFill(Color.YELLOW);
 
         Button exit = new Button("Exit");
         exit.setPrefSize(95, 25);
         exit.setFont(f2);
-        exit.setTextFill(Color.BLACK);
+        exit.setStyle("-fx-background-color: #778899");
+        exit.setTextFill(Color.YELLOW);
 
         var vbox = new VBox();
         vbox.getStyleClass().add("color-palette");
 
-        BackgroundFill bgFill = new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY);
-
-        vbox.setBackground(new Background(bgFill));
-        vbox.getChildren().add(pacman);
+        //BackgroundFill bgFill = new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY);
+        vbox.setBackground(new Background(
+                new BackgroundImage(
+                        new Image("https://www.pixelstalk.net/wp-content/uploads/2016/05/HD-Pacman-Wallpaper.jpg"),
+                                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
+                                new BackgroundPosition(Side.LEFT, 200, true, Side.BOTTOM, 0, true),
+                                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, false, true)
+                        )
+                ));
+        //vbox.setBackground(new Background(bgFill));
+        //vbox.getChildren().add(pacman);
         vbox.getChildren().add(start);
         vbox.getChildren().add(exit);
         vbox.setSpacing(30);
