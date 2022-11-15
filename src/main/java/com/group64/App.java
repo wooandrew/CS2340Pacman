@@ -75,7 +75,7 @@ public class App extends Application {
 
         start.setOnAction(event -> {
             stage.setScene(st.getScene());
-            gm.setState(State.INGAME);
+            gm.setState(State.SETTINGS);
         });
         exit.setOnAction(event -> Platform.exit());
 
@@ -99,7 +99,7 @@ public class App extends Application {
             Platform.exit();
         }
 
-        // Creating the Ghosts
+        // Creating the Pellets
         ArrayList<Pellet> pellets = new ArrayList<>();
 
         String bigPelletKey = "big:assets/bigpellet.png";
@@ -116,18 +116,14 @@ public class App extends Application {
         pellets.add(new Pellet(regPelletKey, new D2D(306, 72), new D2D(8, 8)));
         pellets.add(new Pellet(regPelletKey, new D2D(353, 72), new D2D(8, 8)));
 
-        String ghostRedPath = "Red:assets/redGhost.png";
-        String ghostYellowPath = "Yellow:assets/yellowGhost.png";
-        String ghostTanPath = "Tan:assets/tanGhost.png";
-        String ghostGreenPath = "Green:assets/greenGhost.png";
-
-        redGhost = new Ghost(ghostRedPath, new D2D(544, 384), new D2D(32, 32));
-        yellowGhost = new Ghost(ghostYellowPath, new D2D(576, 384), new D2D(32, 32));
-        tanGhost = new Ghost(ghostTanPath, new D2D(608, 384), new D2D(32, 32));
-        greenGhost = new Ghost(ghostGreenPath, new D2D(640, 384), new D2D(32, 32));
+        ArrayList<Ghost> ghosts = new ArrayList<>();
+        ghosts.add(new Ghost("Red:assets/redGhost.png", new D2D(544, 384), new D2D(32, 32)));
+        ghosts.add(new Ghost("Yellow:assets/yellowGhost.png", new D2D(576, 384), new D2D(32, 32)));
+        ghosts.add(new Ghost("Tan:assets/tanGhost.png", new D2D(608, 384), new D2D(32, 32)));
+        ghosts.add(new Ghost("Green:assets/greenGhost.png", new D2D(640, 384), new D2D(32, 32)));
 
         // Initialize settings
-        st = new Settings(stage, mp.getScene(), player);
+        st = new Settings(stage, gm, mp.getScene(), player);
 
         AnimationTimer loop = new AnimationTimer() {
 
@@ -152,18 +148,22 @@ public class App extends Application {
                     mp.getContext().clearRect(0, 0, 1184, 800);
                     
                     // Update entities
-                    player.update(stage.getScene(), mp.getWalls(), pellets);
+                    player.update(stage.getScene(), mp.getTiles(), pellets, ghosts);
 
                     // Draw
                     mp.draw(gm.getCurrentRound(), player.getLives(), player.getScore());
+                    
                     player.draw(mp.getContext());
-                    redGhost.draw(mp.getContext());
-                    yellowGhost.draw(mp.getContext());
-                    tanGhost.draw(mp.getContext());
-                    greenGhost.draw(mp.getContext());
+
+                    for (Ghost ghost : ghosts) {
+                        ghost.update(mp, gm.getRandom());
+                        ghost.draw(mp.getContext());
+                    }
+
                     for (Pellet pellet : pellets) {
                         pellet.draw(mp.getContext());
                     }
+
 
                     // Set next scene
                     // stage.setScene(class.scene)

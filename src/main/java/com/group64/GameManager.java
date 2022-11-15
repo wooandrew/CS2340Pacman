@@ -1,19 +1,23 @@
 package com.group64;
 
+import java.util.Random;
+
 public class GameManager {
     
-    public enum State {
-        HOME, SETTINGS, INGAME, GAMEOVER
-    }
-
     private State state;
     private int currentRound;
     private int pointsAccumulated;
+    private Random random;          // Random number generator
+
+    public enum State {
+        HOME, SETTINGS, INGAME, GAMEOVER
+    }
 
     public GameManager(State state) {
         this.state = state;
         currentRound = 1;
         pointsAccumulated = 0;
+        random = new Random(System.currentTimeMillis());
     }
 
     // Functions
@@ -53,5 +57,9 @@ public class GameManager {
 
     public int getPointsAccumulated() {
         return pointsAccumulated;
+    }
+
+    public Random getRandom() {
+        return random;
     }
 }
