@@ -105,16 +105,26 @@ public class App extends Application {
         String bigPelletKey = "big:assets/bigpellet.png";
         String regPelletKey = "regular:assets/regularpellet.png";
 
-        pellets.add(new Pellet(bigPelletKey, new D2D(72, 72), new D2D(12, 12)));
-        pellets.add(new Pellet(bigPelletKey, new D2D(72, 552), new D2D(12, 12)));
-        pellets.add(new Pellet(bigPelletKey, new D2D(1105, 72), new D2D(12, 12)));
-        pellets.add(new Pellet(bigPelletKey, new D2D(1105, 552), new D2D(12, 12)));
-        pellets.add(new Pellet(regPelletKey, new D2D(118, 72), new D2D(8, 8)));
-        pellets.add(new Pellet(regPelletKey, new D2D(165, 72), new D2D(8, 8)));
-        pellets.add(new Pellet(regPelletKey, new D2D(212, 72), new D2D(8, 8)));
-        pellets.add(new Pellet(regPelletKey, new D2D(259, 72), new D2D(8, 8)));
-        pellets.add(new Pellet(regPelletKey, new D2D(306, 72), new D2D(8, 8)));
-        pellets.add(new Pellet(regPelletKey, new D2D(353, 72), new D2D(8, 8)));
+        pellets.add(new Pellet(bigPelletKey, new D2D(32 + 10, 32 + 10), new D2D(12, 12)));
+        pellets.add(new Pellet(bigPelletKey, new D2D(1120 + 10, 736 + 10), new D2D(12, 12)));
+        pellets.add(new Pellet(bigPelletKey, new D2D(1120 + 10, 32 + 10), new D2D(12, 12)));
+        pellets.add(new Pellet(bigPelletKey, new D2D(32 + 10, 736 + 10), new D2D(12, 12)));
+        for (int pel = 0; pel < mp.getWalls().size(); pel++) {
+            if (mp.getWalls().get(pel).getSpriteKey().equals("nil")
+                    && pel != 38 && pel != 72 && pel != 852 && pel != 886
+                    && pel != 460 && pel != 461 && pel != 462 && pel != 463 && pel != 464
+                    && pel != 684 && pel != 425) {
+                pellets.add(new Pellet(regPelletKey,
+                        new D2D(mp.getWalls().get(pel).getPosition().getX() + 10, mp.getWalls().get(pel).getPosition().getY() + 10),
+                        new D2D(8, 8)));
+            }
+        }
+//        pellets.add(new Pellet(regPelletKey, new D2D(118, 72), new D2D(8, 8)));
+//        pellets.add(new Pellet(regPelletKey, new D2D(165, 72), new D2D(8, 8)));
+//        pellets.add(new Pellet(regPelletKey, new D2D(212, 72), new D2D(8, 8)));
+//        pellets.add(new Pellet(regPelletKey, new D2D(259, 72), new D2D(8, 8)));
+//        pellets.add(new Pellet(regPelletKey, new D2D(306, 72), new D2D(8, 8)));
+//        pellets.add(new Pellet(regPelletKey, new D2D(353, 72), new D2D(8, 8)));
 
         String ghostRedPath = "Red:assets/redGhost.png";
         String ghostYellowPath = "Yellow:assets/yellowGhost.png";
