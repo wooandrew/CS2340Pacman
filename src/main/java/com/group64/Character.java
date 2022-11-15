@@ -22,12 +22,17 @@ public class Character extends Entity {
     private boolean invincible;
     private int invincibleFrames;
 
-    public Character(ArrayList<String> sprites, D2D pos, D2D size) throws FileNotFoundException {
-        super(sprites, pos, size);
+    public Character(ArrayList<String> sprites, D2D size) throws FileNotFoundException {
+        super(sprites, new D2D(576, 576), size);
+        reset();
+    }
 
+    public void reset() {
         score = 0;
         lives = 3;
         speed = 2;
+
+        position = new D2D(576, 576);
     }
 
     public int getLives() {
