@@ -115,16 +115,11 @@ public class App extends Application {
                     && pel != 460 && pel != 461 && pel != 462 && pel != 463 && pel != 464
                     && pel != 684 && pel != 425) {
                 pellets.add(new Pellet(regPelletKey,
-                        new D2D(mp.getWalls().get(pel).getPosition().getX() + 10, mp.getWalls().get(pel).getPosition().getY() + 10),
+                        new D2D(mp.getWalls().get(pel).getPosition().getX() + 10,
+                                mp.getWalls().get(pel).getPosition().getY() + 10),
                         new D2D(8, 8)));
             }
         }
-//        pellets.add(new Pellet(regPelletKey, new D2D(118, 72), new D2D(8, 8)));
-//        pellets.add(new Pellet(regPelletKey, new D2D(165, 72), new D2D(8, 8)));
-//        pellets.add(new Pellet(regPelletKey, new D2D(212, 72), new D2D(8, 8)));
-//        pellets.add(new Pellet(regPelletKey, new D2D(259, 72), new D2D(8, 8)));
-//        pellets.add(new Pellet(regPelletKey, new D2D(306, 72), new D2D(8, 8)));
-//        pellets.add(new Pellet(regPelletKey, new D2D(353, 72), new D2D(8, 8)));
 
         String ghostRedPath = "Red:assets/redGhost.png";
         String ghostYellowPath = "Yellow:assets/yellowGhost.png";
