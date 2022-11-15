@@ -15,56 +15,53 @@ import java.util.ArrayList;
 
 public class Map {
 
-    private Points points; // points that will be available on map
     private Scene scene;
     private GraphicsContext gc;
     private Image pac;
-    private ArrayList<Entity> walls;
+    private ArrayList<Entity> tiles;
+    private D2D mapSize;
 
     public Map(int pnts) throws IOException {
 
-        walls = new ArrayList<>();
+        tiles = new ArrayList<>();
+
+        mapSize = new D2D(37, 25);
 
         String mapPath = "assets/Map.txt";
         BufferedReader read = new BufferedReader(new FileReader(mapPath));
-        for (int y = 0; y < 13; ++y) {
+        for (int y = 0; y < 25; ++y) {
             String currentLine = read.readLine();
             for (int i = 0; i < currentLine.length(); i++) {
                 int type = Integer.parseInt(String.valueOf(currentLine.charAt(i)));
 
-                D2D size = new D2D(48, 48);
-                D2D pos = new D2D(i * 48, y * 48);
-
-                String path;
+                D2D size = new D2D(32, 32);
+                D2D pos = new D2D(i * 32, y * 32);
 
                 switch (type) {
 
                 case 0:
-                    path = "nil:assets/passableUpdated.png";
+                    tiles.add(new Entity("nil:assets/passableUpdated.png", pos, size));
                     break;
                 case 1:
-                    path = "wall:assets/wallUpdated.png";
+                    tiles.add(new Entity("wall:assets/wallUpdated.png", pos, size));
                     break;
                 case 2:
-                    path = "portal:assets/portalUpdated.png";
+                    tiles.add(new Entity("portal:assets/portalUpdated.png", pos, size));
                     break;
                 default:
-                    path = "";
+                    System.out.println("ERROR: Map file corrupted. Defaulting to passable tile.");
+                    tiles.add(new Entity("nil:assets/passableUpdated.png", pos, size));
                     break;
-                }
-
-                Entity wall = new Entity(path, pos, size);
-                walls.add(wall);
+                }                
             }
 
         }
 
         read.close();
-        
-        this.points = new Points(pnts);
+
 
         StackPane root = new StackPane();
-        Canvas canvas = new Canvas(1200, 800);
+        Canvas canvas = new Canvas(1184, 800);
         gc = canvas.getGraphicsContext2D();
 
         String stream = "assets/maze.png";
@@ -75,16 +72,16 @@ public class Map {
         image.resize(0, 0);
         
         root.getChildren().add(canvas);
-        scene = new Scene(root, 1200, 800);
+        scene = new Scene(root, 1184, 800);
     }
 
     public void draw(int round, int lives, int points) {
 
         // index = row * col + col
-        for (Entity wall : walls) {
-            int x = wall.getPosition().getX();
-            int y = wall.getPosition().getY();
-            gc.drawImage(wall.getSprite(), x, y);
+        for (Entity tile : tiles) {
+            int x = tile.getPosition().getX();
+            int y = tile.getPosition().getY();
+            gc.drawImage(tile.getSprite(), x, y);
         }
 
         // Draw info
@@ -94,10 +91,6 @@ public class Map {
     }
 
     // Getters
-    public Points getPoints() {
-        return points;
-    }
-
     public Scene getScene() {
         return scene;
     }
@@ -110,7 +103,11 @@ public class Map {
         return gc;
     }
 
-    public ArrayList<Entity> getWalls() {
-        return walls;
+    public ArrayList<Entity> getTiles() {
+        return tiles;
+    }
+
+    public D2D getMapSize() {
+        return mapSize;
     }
 }

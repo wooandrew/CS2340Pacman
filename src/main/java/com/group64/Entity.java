@@ -50,7 +50,7 @@ public class Entity {
         spriteKey = imgKeys.get(0).split(":")[0];
     }
 
-    public void update(Entity[] entities) {
+    public void update(ArrayList<Entity> entities) {
 
         // Do collision detection
         for (Entity ent : entities) {

@@ -1,6 +1,9 @@
 package com.group64;
 
 import javafx.stage.Stage;
+
+import com.group64.GameManager.State;
+
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -31,7 +34,7 @@ public class Settings {
 
     private Label check3;
 
-    public Settings(Stage stage, Scene nxt, Character player) {
+    public Settings(Stage stage, GameManager gm, Scene nxt, Character player) {
 
         ign = null;
         difficulty = "easy";
@@ -72,6 +75,7 @@ public class Settings {
         goButton.setVisible(false);
         goButton.setOnAction(e -> {
             stage.setScene(nxt);
+            gm.setState(State.INGAME);
         });
 
         pane.add(characterSelect, 70, 60, 2, 1);
@@ -90,10 +94,10 @@ public class Settings {
         pane.add(submit, 72, 50, 2, 1);
         submit.setOnAction(e -> {
             if (badName(name.getText())) {
-                check.setText("not a valid name");
+                check.setText("Not a valid name!");
                 goButton.setVisible(false);
             } else {
-                check.setText("Thanks");
+                check.setText("Thanks!");
                 setIgn(name.getText());
                 goButton.setVisible(true);
             }

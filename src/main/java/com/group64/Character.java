@@ -12,17 +12,27 @@ public class Character extends Entity {
     
     private int lives;          // Number of lives player has
     private int score;
+    private int speed;
 
     private boolean goNorth;
     private boolean goSouth;
     private boolean goEast;
     private boolean goWest;
 
-    public Character(ArrayList<String> sprites, D2D pos, D2D size) throws FileNotFoundException {
-        super(sprites, pos, size);
+    private boolean invincible;
+    private int invincibleFrames;
 
+    public Character(ArrayList<String> sprites, D2D size) throws FileNotFoundException {
+        super(sprites, new D2D(576, 576), size);
+        reset();
+    }
+
+    public void reset() {
         score = 0;
         lives = 3;
+        speed = 2;
+
+        position = new D2D(576, 576);
     }
 
     public int getLives() {
@@ -37,7 +47,8 @@ public class Character extends Entity {
         this.lives = lives;
     }
 
-    public void update(Scene scene, ArrayList<Entity> walls, ArrayList<Pellet> pellets) {
+    public void update(Scene scene, ArrayList<Entity> tiles, 
+                       ArrayList<Pellet> pellets, ArrayList<Ghost> ghosts) {
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
@@ -88,45 +99,57 @@ public class Character extends Entity {
         });
 
         if (goNorth) {
-            position.setY(position.getY() - 1);
+            position.setY(position.getY() - speed);
         }
         if (goSouth) {
-            position.setY(position.getY() + 1);
+            position.setY(position.getY() + speed);
         }
         if (goEast) {
-            position.setX(position.getX() + 1);
+            position.setX(position.getX() + speed);
         }
         if (goWest) {
-            position.setX(position.getX() - 1);
+            position.setX(position.getX() - speed);
         }
 
-        //collision for wall
-        for (Entity wall : walls) {
+        // Collision check against walls
+        for (Entity tile : tiles) {
 
-            boolean isCollision = collisionDetection(wall);
-
-            if (isCollision && wall.getSpriteKey().compareTo("wall") == 0) { // collision happens
+            if (collisionDetection(tile) && tile.getSpriteKey().compareTo("wall") == 0) {
                 
                 if (goNorth) {
-                    position.setY(position.getY() + 1);
+                    position.setY(position.getY() + speed);
                 }
                 if (goSouth) {
-                    position.setY(position.getY() - 1);
+                    position.setY(position.getY() - speed);
                 }
                 if (goEast) {
-                    position.setX(position.getX() - 1);
+                    position.setX(position.getX() - speed);
                 }
                 if (goWest) {
-                    position.setX(position.getX() + 1);
+                    position.setX(position.getX() + speed);
                 }
             }
         }
-        //collision check for pellets
+        // Collision check against pellets
         for (int x = 0; x < pellets.size(); ++x) {
-            boolean isCollision = collisionDetection(pellets.get(x));
-            if (isCollision) { // collision happens
+
+            if (collisionDetection(pellets.get(x))) { // collision happens
                 score += pellets.get(x).getPointsWorth();
                 pellets.remove(x);
+            }
+        }
+
+        if (invincible) {
+            if (invincibleFrames++ > 120) {
+                invincible = false;
+                invincibleFrames = 0;
+            }
+        } else {
+            for (Ghost ghost : ghosts) {
+                if (collisionDetection(ghost)) {
+                    lives--;
+                    invincible = true;
+                }
             }
         }
     }
