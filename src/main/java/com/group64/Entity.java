@@ -10,7 +10,7 @@ import java.io.FileNotFoundException;
 
 public class Entity {
     
-    protected D2D position;                         // Position in x,y coords
+    protected D2D position;// Position in x,y coords
     protected D2D size;                             // Size of character, in pixels
 
     protected String spriteKey;                     // Key for chosen sprite
@@ -107,5 +107,9 @@ public class Entity {
 
     public void setSpriteKey(String key) {
         spriteKey = key;
+    }
+
+    public void respawn() {
+
     }
 }

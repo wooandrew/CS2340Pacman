@@ -7,27 +7,15 @@ import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-<<<<<<< HEAD
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-=======
-import javafx.scene.image.Image;
->>>>>>> 6ba9074cc96147e264b55cbfa22c18b17f8760b2
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-<<<<<<< HEAD
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
-=======
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
->>>>>>> 6ba9074cc96147e264b55cbfa22c18b17f8760b2
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -60,12 +48,12 @@ public class App extends Application {
         pellets.add(new Pellet(bigPelletKey, new D2D(1120 + 10, 32 + 10), new D2D(12, 12)));
         pellets.add(new Pellet(bigPelletKey, new D2D(32 + 10, 736 + 10), new D2D(12, 12)));
         for (int pel = 0; pel < mp.getTiles().size(); pel++) {
-            if (mp.getTiles().get(pel).getSpriteKey().equals("nil") && pel != 38 && pel != 72 
-                && pel != 852 && pel != 886 && pel != 460 && pel != 461 && pel != 462 && pel != 463
-                && pel != 464 && pel != 684 && pel != 425) {
+            if (mp.getTiles().get(pel).getSpriteKey().equals("nil") && pel != 38 && pel != 72
+                    && pel != 852 && pel != 886 && pel != 460 && pel != 461 && pel != 462 && pel != 463
+                    && pel != 464 && pel != 684 && pel != 425) {
                 pellets.add(new Pellet(regPelletKey,
-                    new D2D(mp.getTiles().get(pel).getPosition().getX() + 10,
-                    mp.getTiles().get(pel).getPosition().getY() + 10), new D2D(8, 8)));
+                        new D2D(mp.getTiles().get(pel).getPosition().getX() + 10,
+                                mp.getTiles().get(pel).getPosition().getY() + 10), new D2D(8, 8)));
             }
         }
 
@@ -78,7 +66,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        
+
         Font f1 = Font.font("Times New Roman", FontWeight.BOLD, 20);
 
         Button start = new Button("Start");
@@ -103,23 +91,12 @@ public class App extends Application {
 
         var vbox = new VBox();
         vbox.getStyleClass().add("color-palette");
-<<<<<<< HEAD
-
-        BackgroundFill bgFill = new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY);
-
-
-        vbox.setBackground(new Background(bgFill));
-        vbox.getChildren().add(pacman);
-        vbox.getChildren().add(start);
-        vbox.getChildren().add(exit);
-=======
         String sImg = "assets/PManStart.jpeg";
-        vbox.setBackground(new Background(new BackgroundImage(new Image(new FileInputStream(sImg)), 
-            BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, new BackgroundPosition(Side.LEFT, 
-            0, true, Side.BOTTOM, 0, true), new BackgroundSize(BackgroundSize.AUTO, 
-            BackgroundSize.AUTO, true, true, false, true))));
+        vbox.setBackground(new Background(new BackgroundImage(new Image(new FileInputStream(sImg)),
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, new BackgroundPosition(Side.LEFT,
+                0, true, Side.BOTTOM, 0, true), new BackgroundSize(BackgroundSize.AUTO,
+                BackgroundSize.AUTO, true, true, false, true))));
         vbox.getChildren().addAll(start, exit);
->>>>>>> 6ba9074cc96147e264b55cbfa22c18b17f8760b2
         vbox.setSpacing(30);
         vbox.setAlignment(Pos.CENTER);
 
@@ -131,10 +108,10 @@ public class App extends Application {
         String over = "assets/GameOver.png";
         try {
             vbox2.setBackground(new Background(new BackgroundImage(new Image(
-                new FileInputStream(over)), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, 
-                new BackgroundPosition(Side.LEFT, 0, true, Side.BOTTOM, 0, true), 
-                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, false, 
-                true)))
+                    new FileInputStream(over)), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
+                    new BackgroundPosition(Side.LEFT, 0, true, Side.BOTTOM, 0, true),
+                    new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, false,
+                            true)))
             );
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -153,10 +130,10 @@ public class App extends Application {
         vbox2.getChildren().addAll(restart, exit1);
         vbox2.setSpacing(30);
         vbox2.setAlignment(Pos.CENTER);
-        
+
         var scene2 = new Scene(vbox2, 1184, 800);
 
-        
+
         stage.setScene(scene);
         stage.setTitle(title);
         //var scene2 = new Scene(vbox, 1184, 800);
@@ -169,7 +146,7 @@ public class App extends Application {
         imgKey.add("yellow:assets/pacmanYellow.png");
         imgKey.add("gray:assets/pacmanGray.png");
         imgKey.add("magenta:assets/pacmanMagenta.png");
-        
+
         setUp();
 
         try {
@@ -196,7 +173,7 @@ public class App extends Application {
 
                     // Clear screen
                     mp.getContext().clearRect(0, 0, 1184, 800);
-                    
+
                     // Update entities
                     player.update(stage.getScene(), mp.getTiles(), pellets, ghosts);
 
@@ -213,7 +190,7 @@ public class App extends Application {
                 }
 
                 if (gm.getState() == State.GAMEOVER) {
-                    
+
                     try {
                         setUp();
                         player.reset();
