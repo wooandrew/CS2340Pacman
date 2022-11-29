@@ -11,8 +11,6 @@ public class Ghost extends Entity {
     private int direction;          // 0: up, 1: down, 2: left, 3: right
     private int nextDirection;      // 0: up, 1: down, 2: left, 3: right
     private int speed;
-    private int invisibleFrames;
-    private boolean invisible;
 
     public Ghost(String imgKey, D2D pos, D2D size) throws FileNotFoundException {
 
@@ -131,17 +129,7 @@ public class Ghost extends Entity {
     public void respawn() {
         position.setX(608);
         position.setY(384);
+
     }
 
-    public void setInvisible(boolean invisible) {
-        this.invisible = invisible;
-    }
-
-    public void makeInvisible() {
-        setSpriteKey("blank:assets/blankGhost.png");
-        if (invisibleFrames++ > 120) {
-            invisible = false;
-            invisibleFrames = 0;
-        }
-    }
 }
