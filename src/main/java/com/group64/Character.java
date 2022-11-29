@@ -21,6 +21,7 @@ public class Character extends Entity {
 
     private boolean invincible;
     private int invincibleFrames;
+    private boolean poweredUp;
 
     public Character(ArrayList<String> sprites, D2D size) throws FileNotFoundException {
         super(sprites, new D2D(576, 576), size);
@@ -135,6 +136,9 @@ public class Character extends Entity {
 
             if (collisionDetection(pellets.get(x))) { // collision happens
                 score += pellets.get(x).getPointsWorth();
+                if (pellets.get(x).getSpriteKey().equals("addLife")) {
+                    lives++;
+                }
                 pellets.remove(x);
             }
         }
@@ -147,8 +151,14 @@ public class Character extends Entity {
         } else {
             for (Ghost ghost : ghosts) {
                 if (collisionDetection(ghost)) {
-                    lives--;
-                    invincible = true;
+                    if (poweredUp) {
+                        ghost.respawn();
+                        score += 20;
+                    } else {
+                        lives--;
+                        ghost.respawn();
+                        respawn();
+                    }
                 }
             }
         }
@@ -160,5 +170,10 @@ public class Character extends Entity {
 
         // Hitbox debugging
         //gc.fillRect(position.getX(), position.getY(), size.getWidth(), size.getHeight());
+    }
+
+    public void respawn() {
+        position.setX(576);
+        position.setY(576);
     }
 }

@@ -133,4 +133,9 @@ public class Ghost extends Entity {
             gc.drawImage(getSprite(), position.getX(), position.getY());
         }
     }
+    public void respawn() {
+        dead = 120;
+        position.setX(608);
+        position.setY(384);
+    }
 }
