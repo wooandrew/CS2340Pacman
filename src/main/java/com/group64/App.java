@@ -45,7 +45,7 @@ public class App extends Application {
         String lifePelletKey = "addLife:assets/lifePellet.png";
 
         pellets.add(new Pellet(lifePelletKey, new D2D(32 + 10, 32 + 10), new D2D(12, 12)));
-        pellets.add(new Pellet(bigPelletKey, new D2D(1120 + 10, 736 + 10), new D2D(12, 12)));
+        pellets.add(new Pellet(lifePelletKey, new D2D(1120 + 10, 736 + 10), new D2D(12, 12)));
         pellets.add(new Pellet(bigPelletKey, new D2D(1120 + 10, 32 + 10), new D2D(12, 12)));
         pellets.add(new Pellet(bigPelletKey, new D2D(32 + 10, 736 + 10), new D2D(12, 12)));
         for (int pel = 0; pel < mp.getTiles().size(); pel++) {
