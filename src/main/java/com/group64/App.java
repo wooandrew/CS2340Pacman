@@ -175,7 +175,7 @@ public class App extends Application {
                     mp.getContext().clearRect(0, 0, 1184, 800);
                     
                     // Update entities
-                    player.update(stage.getScene(), mp.getTiles(), pellets, ghosts);
+                    player.update(stage.getScene(), mp, pellets, ghosts);
 
                     // Draw
                     mp.draw(gm.getCurrentRound(), player.getLives(), player.getScore());
