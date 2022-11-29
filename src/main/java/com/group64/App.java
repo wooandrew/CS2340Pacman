@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -48,7 +49,7 @@ public class App extends Application {
         pellets.add(new Pellet(bigPelletKey, new D2D(1120 + 10, 32 + 10), new D2D(12, 12)));
         pellets.add(new Pellet(bigPelletKey, new D2D(32 + 10, 736 + 10), new D2D(12, 12)));
         for (int pel = 0; pel < mp.getTiles().size(); pel++) {
-            if (mp.getTiles().get(pel).getSpriteKey().equals("nil") && pel != 38 && pel != 72 
+            if (mp.getTiles().get(pel).getSpriteKey().equals("nil") && pel != 38 && pel != 72
                 && pel != 852 && pel != 886 && pel != 460 && pel != 461 && pel != 462 && pel != 463
                 && pel != 464 && pel != 684 && pel != 425) {
                 pellets.add(new Pellet(regPelletKey,
@@ -68,6 +69,8 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         
         Font f1 = Font.font("Times New Roman", FontWeight.BOLD, 20);
+        Font f2 = Font.font("Times New Roman", FontWeight.BOLD, 45);
+
 
         Button start = new Button("Start");
         start.setPrefSize(95, 25);
@@ -88,6 +91,13 @@ public class App extends Application {
         exit1.setStyle("-fx-background-color: #778899");
         exit1.setTextFill(Color.YELLOW);
         exit1.setOnAction(event -> Platform.exit());
+
+        Button exit2 = new Button("Exit");
+        exit2.setPrefSize(95, 25);
+        exit2.setFont(f1);
+        exit2.setStyle("-fx-background-color: #778899");
+        exit2.setTextFill(Color.BLACK);
+        exit2.setOnAction(event -> Platform.exit());
 
         var vbox = new VBox();
         vbox.getStyleClass().add("color-palette");
@@ -110,8 +120,21 @@ public class App extends Application {
             vbox2.setBackground(new Background(new BackgroundImage(new Image(
                 new FileInputStream(over)), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, 
                 new BackgroundPosition(Side.LEFT, 0, true, Side.BOTTOM, 0, true), 
-                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, false, 
+                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, false,
                 true)))
+            );
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        var vbox3 = new VBox();
+        vbox2.getStyleClass().add("color-palette");
+        String over1 = "assets/FINALFORTNITE.png";
+        try {
+            vbox3.setBackground(new Background(new BackgroundImage(new Image(
+                    new FileInputStream(over1)), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
+                    new BackgroundPosition(Side.LEFT, 0, true, Side.BOTTOM, 0, true),
+                    new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, false,
+                            true)))
             );
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -125,18 +148,24 @@ public class App extends Application {
         restart.setOnAction(e -> {
             stage.setScene(scene);
         });
-
-
-        vbox2.getChildren().addAll(restart, exit1);
-        vbox2.setSpacing(30);
-        vbox2.setAlignment(Pos.CENTER);
         
         var scene2 = new Scene(vbox2, 1184, 800);
+
+        Button playAgain = new Button("Play Again");
+        playAgain.setPrefSize(150, 25);
+        playAgain.setFont(f1);
+        playAgain.setStyle("-fx-background-color: #778899");
+        playAgain.setTextFill(Color.BLACK);
+        playAgain.setOnAction(e -> {
+            stage.setScene(scene);
+        });
+
+
+        var scene3 = new Scene(vbox3, 1184, 800);
 
         
         stage.setScene(scene);
         stage.setTitle(title);
-        //var scene2 = new Scene(vbox, 1184, 800);
 
         mp = new Map(30);
 
@@ -169,6 +198,11 @@ public class App extends Application {
                     if (player.getLives() <= 0) {
                         stage.setScene(scene2);
                         gm.setState(State.GAMEOVER);
+
+                    }
+                    if (pellets.size() == 0){
+                        stage.setScene(scene3);
+                        gm.setState(State.GAMEOVER);
                     }
 
                     // Clear screen
@@ -192,8 +226,31 @@ public class App extends Application {
                 if (gm.getState() == State.GAMEOVER) {
                     
                     try {
+
                         setUp();
+
+                        Label score1 = new Label("Final Score: " + player.getScore());
+                        Label lives1 = new Label("Lives Remaining: " + player.getLives());
+                        Label ghostsEaten1 = new Label( "Ghosts eaten: " );
+                        score1.setFont(f2);
+                        lives1.setFont(f2);
+                        ghostsEaten1.setFont(f2);
+                        vbox2.getChildren().addAll(score1, lives1, ghostsEaten1, restart, exit1);
+                        vbox2.setSpacing(15);
+                        vbox2.setAlignment(Pos.BOTTOM_CENTER);
+
+                        Label score = new Label("Final Score: " + player.getScore());
+                        Label lives = new Label("Lives Remaining: " + player.getLives());
+                        Label ghostsEaten = new Label( "Ghosts eaten: " );
+                        score.setFont(f2);
+                        lives.setFont(f2);
+                        ghostsEaten.setFont(f2);
+                        vbox3.getChildren().addAll(score, lives, ghostsEaten, playAgain, exit2);
+                        vbox3.setSpacing(10);
+                        vbox3.setAlignment(Pos.BOTTOM_CENTER);
+
                         player.reset();
+
                     } catch (Exception e) {
                         System.out.println("FATAL ERROR: " + e.getMessage());
                     }
@@ -201,6 +258,9 @@ public class App extends Application {
                     this.stop();
                 }
             }
+
+
+
         };
 
         start.setOnAction(event -> {
