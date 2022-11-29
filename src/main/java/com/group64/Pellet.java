@@ -19,6 +19,8 @@ public class Pellet extends Entity {
             pointsWorth = 10;
         } else if (input.equals("big")) {
             pointsWorth = 50;
+        } else if (input.equals("addLife")) {
+            pointsWorth = 50;
         }
     }
 

@@ -136,6 +136,9 @@ public class Character extends Entity {
 
             if (collisionDetection(pellets.get(x))) { // collision happens
                 score += pellets.get(x).getPointsWorth();
+                if (pellets.get(x).getSpriteKey().equals("addLife")) {
+                    lives++;
+                }
                 pellets.remove(x);
             }
         }
