@@ -155,7 +155,7 @@ public class Character extends Entity {
                         score += 20;
                     } else {
                         lives--;
-                        ghost.makeInvisible();
+                        ghost.respawn();
                         respawn();
                     }
                 }

@@ -1,6 +1,7 @@
 package com.group64;
 
 import com.group64.Map.Map;
+import javafx.scene.canvas.GraphicsContext;
 
 import java.util.Random;
 import java.util.ArrayList;
@@ -11,15 +12,15 @@ public class Ghost extends Entity {
     private int direction;          // 0: up, 1: down, 2: left, 3: right
     private int nextDirection;      // 0: up, 1: down, 2: left, 3: right
     private int speed;
+    private int dead;
 
     public Ghost(String imgKey, D2D pos, D2D size) throws FileNotFoundException {
 
         super(imgKey, pos, size);
-
+        dead = 0;
         speed = 1;
         direction = 2;
         nextDirection = 0;
-        invisible = false;
     }
 
     private void setNextDirection(Random random) {
@@ -181,10 +182,15 @@ public class Ghost extends Entity {
         }
     }
 
+    @Override
+    public void draw(GraphicsContext gc) {
+        if (dead-- < 0) {
+            gc.drawImage(getSprite(), position.getX(), position.getY());
+        }
+    }
     public void respawn() {
+        dead = 120;
         position.setX(608);
         position.setY(384);
-
     }
-
 }
