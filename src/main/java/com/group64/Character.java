@@ -21,7 +21,9 @@ public class Character extends Entity {
 
     private boolean invincible;
     private int invincibleFrames;
+
     private boolean poweredUp;
+    private int poweredUpFrames;
 
     public Character(ArrayList<String> sprites, D2D size) throws FileNotFoundException {
         super(sprites, new D2D(576, 576), size);
@@ -138,12 +140,19 @@ public class Character extends Entity {
                 if (pellets.get(x).getSpriteKey().equals("addLife")) {
                     lives++;
                 }
+                if (pellets.get(x).getSpriteKey().equals("big")) {
+                    poweredUp = true;
+                }
                 pellets.remove(x);
             }
         }
 
+        if (poweredUp) {
+            ++poweredUpFrames;
+        }
+
         if (invincible) {
-            if (invincibleFrames++ > 120) {
+            if (++invincibleFrames > 120) {
                 invincible = false;
                 invincibleFrames = 0;
             }
@@ -151,12 +160,15 @@ public class Character extends Entity {
             for (Ghost ghost : ghosts) {
                 if (collisionDetection(ghost)) {
                     if (poweredUp) {
+                        if (poweredUpFrames > 300) {
+                            poweredUp = false;
+                            poweredUpFrames = 0;
+                        }
                         ghost.respawn();
                         score += 20;
                     } else {
+                        invincible = true;
                         lives--;
-                        ghost.respawn();
-                        respawn();
                     }
                 }
             }
@@ -168,16 +180,13 @@ public class Character extends Entity {
 
         if (invincible && invincibleFrames % 10 < 5) {       // Blink
             gc.drawImage(getSprite(), position.getX(), position.getY());
+        } else if (poweredUp) {
+            gc.drawImage(getSprite("magenta"), position.getX(), position.getY());
         } else if (!invincible) {
             gc.drawImage(getSprite(), position.getX(), position.getY());
         }
 
         // Hitbox debugging
         //gc.fillRect(position.getX(), position.getY(), size.getWidth(), size.getHeight());
-    }
-
-    public void respawn() {
-        position.setX(576);
-        position.setY(576);
     }
 }

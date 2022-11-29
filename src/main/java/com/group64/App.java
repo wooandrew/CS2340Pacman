@@ -50,8 +50,8 @@ public class App extends Application {
         pellets.add(new Pellet(bigPelletKey, new D2D(32 + 10, 736 + 10), new D2D(12, 12)));
         for (int pel = 0; pel < mp.getTiles().size(); pel++) {
             if (mp.getTiles().get(pel).getSpriteKey().equals("nil") && pel != 38 && pel != 72
-                    && pel != 852 && pel != 886 && pel != 460 && pel != 461 && pel != 462 && pel != 463
-                    && pel != 464 && pel != 684 && pel != 425) {
+                    && pel != 852 && pel != 886 && pel != 460 && pel != 461 && pel != 462
+                    && pel != 463 && pel != 464 && pel != 684 && pel != 425) {
                 pellets.add(new Pellet(regPelletKey,
                         new D2D(mp.getTiles().get(pel).getPosition().getX() + 10,
                                 mp.getTiles().get(pel).getPosition().getY() + 10), new D2D(8, 8)));
@@ -94,9 +94,9 @@ public class App extends Application {
         vbox.getStyleClass().add("color-palette");
         String sImg = "assets/PManStart.jpeg";
         vbox.setBackground(new Background(new BackgroundImage(new Image(new FileInputStream(sImg)),
-                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, new BackgroundPosition(Side.LEFT,
-                0, true, Side.BOTTOM, 0, true), new BackgroundSize(BackgroundSize.AUTO,
-                BackgroundSize.AUTO, true, true, false, true))));
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, new BackgroundPosition(
+                    Side.LEFT, 0, true, Side.BOTTOM, 0, true), new BackgroundSize(
+                        BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, false, true))));
         vbox.getChildren().addAll(start, exit);
         vbox.setSpacing(30);
         vbox.setAlignment(Pos.CENTER);
