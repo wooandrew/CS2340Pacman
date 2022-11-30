@@ -110,4 +110,8 @@ public class Map {
     public D2D getMapSize() {
         return mapSize;
     }
+
+    public Boolean isWall(int index) {
+        return tiles.get(index).getSpriteKey().compareTo("wall") == 0;
+    }
 }

@@ -108,4 +108,8 @@ public class Entity {
     public void setSpriteKey(String key) {
         spriteKey = key;
     }
+
+    public void respawn() {
+
+    }
 }

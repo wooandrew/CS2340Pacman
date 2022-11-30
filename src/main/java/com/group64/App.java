@@ -43,20 +43,21 @@ public class App extends Application {
         pellets = new ArrayList<>();
         String bigPelletKey = "big:assets/bigpellet.png";
         String regPelletKey = "regular:assets/regularpellet.png";
+        String lifePelletKey = "addLife:assets/lifePellet.png";
 
-        pellets.add(new Pellet(bigPelletKey, new D2D(32 + 10, 32 + 10), new D2D(12, 12)));
-        //pellets.add(new Pellet(bigPelletKey, new D2D(1120 + 10, 736 + 10), new D2D(12, 12)));
-        //pellets.add(new Pellet(bigPelletKey, new D2D(1120 + 10, 32 + 10), new D2D(12, 12)));
-        //pellets.add(new Pellet(bigPelletKey, new D2D(32 + 10, 736 + 10), new D2D(12, 12)));
-        //for (int pel = 0; pel < mp.getTiles().size(); pel++) {
-        //    if (mp.getTiles().get(pel).getSpriteKey().equals("nil") && pel != 38 && pel != 72
-        //        && pel != 852 && pel != 886 && pel != 460 && pel != 461 && pel != 462 && pel != 463
-        //        && pel != 464 && pel != 684 && pel != 425) {
-        //        pellets.add(new Pellet(regPelletKey,
-        //            new D2D(mp.getTiles().get(pel).getPosition().getX() + 10,
-        //            mp.getTiles().get(pel).getPosition().getY() + 10), new D2D(8, 8)));
-        //    }
-        //}
+        pellets.add(new Pellet(lifePelletKey, new D2D(32 + 10, 32 + 10), new D2D(12, 12)));
+        pellets.add(new Pellet(lifePelletKey, new D2D(1120 + 10, 736 + 10), new D2D(12, 12)));
+        pellets.add(new Pellet(bigPelletKey, new D2D(1120 + 10, 32 + 10), new D2D(12, 12)));
+        pellets.add(new Pellet(bigPelletKey, new D2D(32 + 10, 736 + 10), new D2D(12, 12)));
+        for (int pel = 0; pel < mp.getTiles().size(); pel++) {
+            if (mp.getTiles().get(pel).getSpriteKey().equals("nil") && pel != 38 && pel != 72
+                    && pel != 852 && pel != 886 && pel != 460 && pel != 461 && pel != 462
+                    && pel != 463 && pel != 464 && pel != 684 && pel != 425) {
+                pellets.add(new Pellet(regPelletKey,
+                        new D2D(mp.getTiles().get(pel).getPosition().getX() + 10,
+                                mp.getTiles().get(pel).getPosition().getY() + 10), new D2D(8, 8)));
+            }
+        }
 
         ghosts = new ArrayList<>();
         ghosts.add(new Ghost("Red:assets/redGhost.png", new D2D(544, 384), new D2D(32, 32)));
@@ -67,7 +68,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        
+
         Font f1 = Font.font("Times New Roman", FontWeight.BOLD, 20);
         Font f2 = Font.font("Times New Roman", FontWeight.BOLD, 45);
 
@@ -102,10 +103,10 @@ public class App extends Application {
         var vbox = new VBox();
         vbox.getStyleClass().add("color-palette");
         String sImg = "assets/PManStart.jpeg";
-        vbox.setBackground(new Background(new BackgroundImage(new Image(new FileInputStream(sImg)), 
-            BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, new BackgroundPosition(Side.LEFT, 
-            0, true, Side.BOTTOM, 0, true), new BackgroundSize(BackgroundSize.AUTO, 
-            BackgroundSize.AUTO, true, true, false, true))));
+        vbox.setBackground(new Background(new BackgroundImage(new Image(new FileInputStream(sImg)),
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, new BackgroundPosition(
+                    Side.LEFT, 0, true, Side.BOTTOM, 0, true), new BackgroundSize(
+                        BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, false, true))));
         vbox.getChildren().addAll(start, exit);
         vbox.setSpacing(30);
         vbox.setAlignment(Pos.CENTER);
@@ -142,8 +143,7 @@ public class App extends Application {
                 new FileInputStream(over)), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, 
                 new BackgroundPosition(Side.LEFT, 0, true, Side.BOTTOM, 0, true), 
                 new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, false,
-                true)))
-            );
+                true))));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -187,7 +187,7 @@ public class App extends Application {
         }
         var scene3 = new Scene(vbox3, 1184, 800);
         // -- END OF VBOX3 --------------------------------------------------------------------- //
-        
+
         stage.setScene(scene);
         stage.setTitle(title);
 
@@ -199,7 +199,7 @@ public class App extends Application {
         imgKey.add("yellow:assets/pacmanYellow.png");
         imgKey.add("gray:assets/pacmanGray.png");
         imgKey.add("magenta:assets/pacmanMagenta.png");
-        
+
         setUp();
 
         try {
@@ -234,9 +234,9 @@ public class App extends Application {
 
                     // Clear screen
                     mp.getContext().clearRect(0, 0, 1184, 800);
-                    
+
                     // Update entities
-                    player.update(stage.getScene(), mp.getTiles(), pellets, ghosts);
+                    player.update(stage.getScene(), mp, pellets, ghosts);
 
                     // Draw
                     mp.draw(gm.getCurrentRound(), player.getLives(), player.getScore());
@@ -251,7 +251,7 @@ public class App extends Application {
                 }
 
                 if (gm.getState() == State.GAMEOVER) {
-                    
+
                     try {
 
                         setUp();
