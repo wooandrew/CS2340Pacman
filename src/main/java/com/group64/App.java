@@ -112,9 +112,7 @@ public class App extends Application {
         });
 
         String over = "assets/GameOver.png";
-        Label ghostsEaten = new Label("Ghosts eaten: ");
-        ghostsEaten.setFont(f2);
-        vbox.getChildren().addAll(ghostsEaten, restart, exit1);
+        vbox.getChildren().addAll(restart, exit1);
         vbox.setSpacing(15);
         vbox.setAlignment(Pos.BOTTOM_CENTER);
 
