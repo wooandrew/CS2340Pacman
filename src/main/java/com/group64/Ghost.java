@@ -1,6 +1,7 @@
 package com.group64;
 
 import com.group64.Map.Map;
+import javafx.scene.canvas.GraphicsContext;
 
 import java.util.Random;
 import java.util.ArrayList;
@@ -11,11 +12,12 @@ public class Ghost extends Entity {
     private int direction;          // 0: up, 1: down, 2: left, 3: right
     private int nextDirection;      // 0: up, 1: down, 2: left, 3: right
     private int speed;
+    private int dead;
 
     public Ghost(String imgKey, D2D pos, D2D size) throws FileNotFoundException {
 
         super(imgKey, pos, size);
-
+        dead = 0;
         speed = 1;
         direction = 2;
         nextDirection = 0;
@@ -26,7 +28,7 @@ public class Ghost extends Entity {
         nextDirection = random.nextInt(4);
 
         if (nextDirection == direction) {
-            nextDirection = (nextDirection + 2) % 4;
+            nextDirection++;
         }
     }
 
@@ -40,11 +42,66 @@ public class Ghost extends Entity {
         return false;
     }
 
+    private void changeDirections(Map map, Random random) {
+
+        D2D nPos = new D2D(position.getX() / 32, position.getY() / 32);
+
+        int iAbove = (nPos.getY() - 1) * map.getMapSize().getWidth() + nPos.getX();         // Above
+        int iBelow = (nPos.getY() + 1) * map.getMapSize().getWidth() + nPos.getX();         // Below
+        int iRight = nPos.getY() * map.getMapSize().getWidth() + nPos.getX() + 1;           // Right
+        int iLeft = nPos.getY() * map.getMapSize().getWidth() + nPos.getX() - 1;            // Left
+
+        // 0: up, 1: down, 2: left, 3: right
+        if (direction == 0) {
+            if (map.isWall(iAbove)) {
+                if (!map.isWall(iRight) && !map.isWall(iLeft)) {
+                    nextDirection = random.nextInt(2) + 2;
+                } else if (!map.isWall(iRight)) {
+                    nextDirection = 3;
+                } else if (!map.isWall(iLeft)) {
+                    nextDirection = 2;
+                }
+            }
+        } else if (direction == 1) {
+            if (map.isWall(iBelow)) {
+                if (!map.isWall(iRight) && !map.isWall(iLeft)) {
+                    nextDirection = random.nextInt(2) + 2;
+                } else if (!map.isWall(iRight)) {
+                    nextDirection = 3;
+                } else if (!map.isWall(iLeft)) {
+                    nextDirection = 2;
+                }
+            }
+        } else if (direction == 2) {
+            if (map.isWall(iLeft)) {
+                if (!map.isWall(iAbove) && !map.isWall(iBelow)) {
+                    nextDirection = random.nextInt(2);
+                } else if (!map.isWall(iAbove)) {
+                    nextDirection = 0;
+                } else if (!map.isWall(iBelow)) {
+                    nextDirection = 1;
+                }
+            }
+        } else if (direction == 3) {
+            if (map.isWall(iRight)) {
+                if (!map.isWall(iAbove) && !map.isWall(iBelow)) {
+                    nextDirection = random.nextInt(2);
+                } else if (!map.isWall(iAbove)) {
+                    nextDirection = 0;
+                } else if (!map.isWall(iBelow)) {
+                    nextDirection = 1;
+                }
+            }
+        }
+
+    }
+
     public void update(Map map, Random random) {
 
         ArrayList<Entity> tiles = map.getTiles();
 
-        if (!inSpawn() && random.nextInt(101) < 5) {
+        changeDirections(map, random);
+        if (!inSpawn() && random.nextInt(1001) < 5) {
             setNextDirection(random);
         }
 
@@ -53,9 +110,9 @@ public class Ghost extends Entity {
         } else if (direction == 1) {
             position.setY(position.getY() + speed);
         } else if (direction == 2) {
-            position.setX(position.getX() + speed);
-        } else if (direction == 3) {
             position.setX(position.getX() - speed);
+        } else if (direction == 3) {
+            position.setX(position.getX() + speed);
         }
 
         Boolean skipNormalization = false;
@@ -74,13 +131,13 @@ public class Ghost extends Entity {
                 } else if (direction == 1) {
                     position.setY(position.getY() - speed);
                 } else if (direction == 2) {
-                    position.setX(position.getX() - speed);
+                    position.setX(position.getX() + speed);
                     if (inSpawn()) {
                         direction = 3;
                         break;
                     }
                 } else if (direction == 3) {
-                    position.setX(position.getX() + speed);
+                    position.setX(position.getX() - speed);
                     if (inSpawn()) {
                         direction = 2;
                         break;
@@ -123,5 +180,17 @@ public class Ghost extends Entity {
                 }
             }
         }
+    }
+
+    @Override
+    public void draw(GraphicsContext gc) {
+        if (dead-- < 0) {
+            gc.drawImage(getSprite(), position.getX(), position.getY());
+        }
+    }
+    public void respawn() {
+        dead = 120;
+        position.setX(608);
+        position.setY(384);
     }
 }
