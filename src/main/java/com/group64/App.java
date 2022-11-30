@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -69,6 +70,8 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
 
         Font f1 = Font.font("Times New Roman", FontWeight.BOLD, 20);
+        Font f2 = Font.font("Times New Roman", FontWeight.BOLD, 45);
+
 
         Button start = new Button("Start");
         start.setPrefSize(95, 25);
@@ -90,6 +93,13 @@ public class App extends Application {
         exit1.setTextFill(Color.YELLOW);
         exit1.setOnAction(event -> Platform.exit());
 
+        Button exit2 = new Button("Exit");
+        exit2.setPrefSize(95, 25);
+        exit2.setFont(f1);
+        exit2.setStyle("-fx-background-color: #778899");
+        exit2.setTextFill(Color.BLACK);
+        exit2.setOnAction(event -> Platform.exit());
+
         var vbox = new VBox();
         vbox.getStyleClass().add("color-palette");
         String sImg = "assets/PManStart.jpeg";
@@ -104,19 +114,9 @@ public class App extends Application {
         var scene = new Scene(vbox, 1184, 800);
         scene.setFill(Color.BLACK);
 
+        // -- VBOX2 ---------------------------------------------------------------------------- //
         var vbox2 = new VBox();
         vbox2.getStyleClass().add("color-palette");
-        String over = "assets/GameOver.png";
-        try {
-            vbox2.setBackground(new Background(new BackgroundImage(new Image(
-                    new FileInputStream(over)), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
-                    new BackgroundPosition(Side.LEFT, 0, true, Side.BOTTOM, 0, true),
-                    new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, false,
-                            true)))
-            );
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
 
         Button restart = new Button("Restart");
         restart.setPrefSize(95, 25);
@@ -127,17 +127,69 @@ public class App extends Application {
             stage.setScene(scene);
         });
 
+        String over = "assets/GameOver.png";
+        Label score = new Label("Final Score: ");
+        Label lives = new Label("Lives Remaining: ");
+        Label ghostsEaten = new Label("Ghosts eaten: ");
+        score.setFont(f2);
+        lives.setFont(f2);
+        ghostsEaten.setFont(f2);
+        vbox2.getChildren().addAll(score, lives, ghostsEaten, restart, exit1);
+        vbox2.setSpacing(15);
+        vbox2.setAlignment(Pos.BOTTOM_CENTER);
 
-        vbox2.getChildren().addAll(restart, exit1);
-        vbox2.setSpacing(30);
-        vbox2.setAlignment(Pos.CENTER);
-
+        try {
+            vbox2.setBackground(new Background(new BackgroundImage(new Image(
+                new FileInputStream(over)), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, 
+                new BackgroundPosition(Side.LEFT, 0, true, Side.BOTTOM, 0, true), 
+                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, false,
+                true))));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         var scene2 = new Scene(vbox2, 1184, 800);
+        // -- END OF VBOX2 --------------------------------------------------------------------- //
 
+        // -- VBOX3 ---------------------------------------------------------------------------- //
+        var vbox3 = new VBox();
+        vbox3.getStyleClass().add("color-palette");
+        
+        Button playAgain = new Button("Play Again");
+        playAgain.setPrefSize(150, 25);
+        playAgain.setFont(f1);
+        playAgain.setStyle("-fx-background-color: #778899");
+        playAgain.setTextFill(Color.BLACK);
+
+        playAgain.setOnAction(e -> {
+            stage.setScene(scene);
+        });
+
+        String over1 = "assets/FINALFORTNITE.png";
+        Label score1 = new Label("Final Score: ");
+        Label lives1 = new Label("Lives Remaining: ");
+        Label ghostsEaten1 = new Label( "Ghosts eaten: " );
+
+        score.setFont(f2);
+        lives.setFont(f2);
+        ghostsEaten.setFont(f2);
+        vbox3.getChildren().addAll(score1, lives1, ghostsEaten1, playAgain, exit2);
+        vbox3.setSpacing(10);
+        vbox3.setAlignment(Pos.BOTTOM_CENTER);
+        try {
+            vbox3.setBackground(new Background(new BackgroundImage(new Image(
+                    new FileInputStream(over1)), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
+                    new BackgroundPosition(Side.LEFT, 0, true, Side.BOTTOM, 0, true),
+                    new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, false,
+                            true)))
+            );
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        var scene3 = new Scene(vbox3, 1184, 800);
+        // -- END OF VBOX3 --------------------------------------------------------------------- //
 
         stage.setScene(scene);
         stage.setTitle(title);
-        //var scene2 = new Scene(vbox, 1184, 800);
 
         mp = new Map(30);
 
@@ -168,7 +220,15 @@ public class App extends Application {
                 if (gm.getState() == State.INGAME) {
 
                     if (player.getLives() <= 0) {
+                        score.setText("Final Score: " + player.getScore());
+                        lives.setText("Lives Remaining: " + player.getLives());
                         stage.setScene(scene2);
+                        gm.setState(State.GAMEOVER);
+                    }
+                    if (pellets.size() == 0) {
+                        score1.setText("Final Score: " + player.getScore());
+                        lives1.setText("Lives Remaining: " + player.getLives());
+                        stage.setScene(scene3);
                         gm.setState(State.GAMEOVER);
                     }
 
@@ -193,8 +253,10 @@ public class App extends Application {
                 if (gm.getState() == State.GAMEOVER) {
 
                     try {
+
                         setUp();
                         player.reset();
+
                     } catch (Exception e) {
                         System.out.println("FATAL ERROR: " + e.getMessage());
                     }
@@ -202,6 +264,9 @@ public class App extends Application {
                     this.stop();
                 }
             }
+
+
+
         };
 
         start.setOnAction(event -> {
