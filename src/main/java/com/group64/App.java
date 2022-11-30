@@ -66,14 +66,8 @@ public class App extends Application {
         ghosts.add(new Ghost("Green:assets/greenGhost.png", new D2D(640, 384), new D2D(32, 32)));
     }
 
-    @Override
-    public void start(Stage stage) throws IOException {
+    void setUpVBox1(VBox vbox, Font f1, Button start) throws FileNotFoundException {
 
-        Font f1 = Font.font("Times New Roman", FontWeight.BOLD, 20);
-        Font f2 = Font.font("Times New Roman", FontWeight.BOLD, 45);
-
-
-        Button start = new Button("Start");
         start.setPrefSize(95, 25);
         start.setFont(f1);
         start.setStyle("-fx-background-color: #778899");
@@ -86,37 +80,27 @@ public class App extends Application {
         exit.setTextFill(Color.YELLOW);
         exit.setOnAction(event -> Platform.exit());
 
+        vbox.getStyleClass().add("color-palette");
+        String sImg = "assets/PManStart.jpeg";
+        vbox.setBackground(new Background(new BackgroundImage(new Image(new FileInputStream(sImg)),
+            BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, new BackgroundPosition(Side.LEFT, 
+            0, true, Side.BOTTOM, 0, true), new BackgroundSize(BackgroundSize.AUTO, 
+            BackgroundSize.AUTO, true, true, false, true))));
+        vbox.getChildren().addAll(start, exit);
+        vbox.setSpacing(30);
+        vbox.setAlignment(Pos.CENTER);
+    }
+
+    void setUpVBox2(VBox vbox, Font f1, Font f2, Stage stage, Scene scene) {
+
         Button exit1 = new Button("Exit");
         exit1.setPrefSize(95, 25);
         exit1.setFont(f1);
         exit1.setStyle("-fx-background-color: #778899");
         exit1.setTextFill(Color.YELLOW);
         exit1.setOnAction(event -> Platform.exit());
-
-        Button exit2 = new Button("Exit");
-        exit2.setPrefSize(95, 25);
-        exit2.setFont(f1);
-        exit2.setStyle("-fx-background-color: #778899");
-        exit2.setTextFill(Color.BLACK);
-        exit2.setOnAction(event -> Platform.exit());
-
-        var vbox = new VBox();
+       
         vbox.getStyleClass().add("color-palette");
-        String sImg = "assets/PManStart.jpeg";
-        vbox.setBackground(new Background(new BackgroundImage(new Image(new FileInputStream(sImg)),
-                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, new BackgroundPosition(
-                    Side.LEFT, 0, true, Side.BOTTOM, 0, true), new BackgroundSize(
-                        BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, false, true))));
-        vbox.getChildren().addAll(start, exit);
-        vbox.setSpacing(30);
-        vbox.setAlignment(Pos.CENTER);
-
-        var scene = new Scene(vbox, 1184, 800);
-        scene.setFill(Color.BLACK);
-
-        // -- VBOX2 ---------------------------------------------------------------------------- //
-        var vbox2 = new VBox();
-        vbox2.getStyleClass().add("color-palette");
 
         Button restart = new Button("Restart");
         restart.setPrefSize(95, 25);
@@ -128,31 +112,33 @@ public class App extends Application {
         });
 
         String over = "assets/GameOver.png";
-        Label score = new Label("Final Score: ");
-        Label lives = new Label("Lives Remaining: ");
         Label ghostsEaten = new Label("Ghosts eaten: ");
-        score.setFont(f2);
-        lives.setFont(f2);
         ghostsEaten.setFont(f2);
-        vbox2.getChildren().addAll(score, lives, ghostsEaten, restart, exit1);
-        vbox2.setSpacing(15);
-        vbox2.setAlignment(Pos.BOTTOM_CENTER);
+        vbox.getChildren().addAll(ghostsEaten, restart, exit1);
+        vbox.setSpacing(15);
+        vbox.setAlignment(Pos.BOTTOM_CENTER);
 
         try {
-            vbox2.setBackground(new Background(new BackgroundImage(new Image(
-                new FileInputStream(over)), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, 
+            vbox.setBackground(new Background(new BackgroundImage(new Image(new FileInputStream(
+                over)), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, 
                 new BackgroundPosition(Side.LEFT, 0, true, Side.BOTTOM, 0, true), 
                 new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, false,
                 true))));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        var scene2 = new Scene(vbox2, 1184, 800);
-        // -- END OF VBOX2 --------------------------------------------------------------------- //
+    }
 
-        // -- VBOX3 ---------------------------------------------------------------------------- //
-        var vbox3 = new VBox();
-        vbox3.getStyleClass().add("color-palette");
+    void setUpVBox3(VBox vbox, Font f1, Font f2, Stage stage, Scene scene) {
+
+        Button exit = new Button("Exit");
+        exit.setPrefSize(95, 25);
+        exit.setFont(f1);
+        exit.setStyle("-fx-background-color: #778899");
+        exit.setTextFill(Color.BLACK);
+        exit.setOnAction(event -> Platform.exit());
+
+        vbox.getStyleClass().add("color-palette");
         
         Button playAgain = new Button("Play Again");
         playAgain.setPrefSize(150, 25);
@@ -164,29 +150,56 @@ public class App extends Application {
             stage.setScene(scene);
         });
 
-        String over1 = "assets/FINALFORTNITE.png";
-        Label score1 = new Label("Final Score: ");
-        Label lives1 = new Label("Lives Remaining: ");
-        Label ghostsEaten1 = new Label( "Ghosts eaten: " );
+        String over = "assets/FINALFORTNITE.png";
 
-        score.setFont(f2);
-        lives.setFont(f2);
-        ghostsEaten.setFont(f2);
-        vbox3.getChildren().addAll(score1, lives1, ghostsEaten1, playAgain, exit2);
-        vbox3.setSpacing(10);
-        vbox3.setAlignment(Pos.BOTTOM_CENTER);
+        vbox.getChildren().addAll(playAgain, exit);
+        vbox.setSpacing(10);
+        vbox.setAlignment(Pos.BOTTOM_CENTER);
         try {
-            vbox3.setBackground(new Background(new BackgroundImage(new Image(
-                    new FileInputStream(over1)), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
-                    new BackgroundPosition(Side.LEFT, 0, true, Side.BOTTOM, 0, true),
-                    new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, false,
-                            true)))
+            vbox.setBackground(new Background(new BackgroundImage(new Image(
+                new FileInputStream(over)), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
+                new BackgroundPosition(Side.LEFT, 0, true, Side.BOTTOM, 0, true),
+                new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, false,
+                true)))
             );
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void start(Stage stage) throws IOException {
+
+        Font f1 = Font.font("Times New Roman", FontWeight.BOLD, 20);
+        Font f2 = Font.font("Times New Roman", FontWeight.BOLD, 45);
+
+        var vbox = new VBox();
+        Button start = new Button("Start");
+        setUpVBox1(vbox, f1, start);
+        var scene = new Scene(vbox, 1184, 800);
+        scene.setFill(Color.BLACK);
+
+        var vbox2 = new VBox();
+        Label score = new Label("Hello World");
+        score.setFont(f2);
+        Label lives = new Label("Hello World");
+        lives.setFont(f2);
+        Label ghostsEaten = new Label("Ghosts eaten: ");
+        ghostsEaten.setFont(f2);
+        vbox2.getChildren().addAll(score, lives, ghostsEaten);
+        setUpVBox2(vbox2, f1, f2, stage, scene);
+        var scene2 = new Scene(vbox2, 1184, 800);
+
+        var vbox3 = new VBox();
+        Label score1 = new Label("Final Score: ");
+        score1.setFont(f2);
+        Label lives1 = new Label("Lives Remaining: ");
+        lives1.setFont(f2);
+        Label ghostsEaten1 = new Label("Ghosts eaten: ");
+        ghostsEaten1.setFont(f2);
+        vbox3.getChildren().addAll(score1, lives1, ghostsEaten1);
+        setUpVBox3(vbox3, f1, f2, stage, scene);
         var scene3 = new Scene(vbox3, 1184, 800);
-        // -- END OF VBOX3 --------------------------------------------------------------------- //
 
         stage.setScene(scene);
         stage.setTitle(title);
@@ -222,12 +235,14 @@ public class App extends Application {
                     if (player.getLives() <= 0) {
                         score.setText("Final Score: " + player.getScore());
                         lives.setText("Lives Remaining: " + player.getLives());
+                        ghostsEaten.setText("Ghosts Eaten: " + player.getGhostsEaten());
                         stage.setScene(scene2);
                         gm.setState(State.GAMEOVER);
                     }
                     if (pellets.size() == 0) {
                         score1.setText("Final Score: " + player.getScore());
                         lives1.setText("Lives Remaining: " + player.getLives());
+                        ghostsEaten1.setText("Ghosts Eaten: " + player.getGhostsEaten());
                         stage.setScene(scene3);
                         gm.setState(State.GAMEOVER);
                     }
@@ -253,10 +268,8 @@ public class App extends Application {
                 if (gm.getState() == State.GAMEOVER) {
 
                     try {
-
                         setUp();
                         player.reset();
-
                     } catch (Exception e) {
                         System.out.println("FATAL ERROR: " + e.getMessage());
                     }
@@ -264,9 +277,6 @@ public class App extends Application {
                     this.stop();
                 }
             }
-
-
-
         };
 
         start.setOnAction(event -> {
@@ -275,12 +285,10 @@ public class App extends Application {
             loop.start();
         });
 
-
         stage.show();
     }
 
     public static void main(String[] args) {
         launch();
     }
-
 }

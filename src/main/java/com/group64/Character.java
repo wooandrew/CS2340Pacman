@@ -25,6 +25,8 @@ public class Character extends Entity {
     private boolean poweredUp;
     private int poweredUpFrames;
 
+    private int ghostsEaten;
+
     public Character(ArrayList<String> sprites, D2D size) throws FileNotFoundException {
         super(sprites, new D2D(576, 576), size);
         reset();
@@ -38,6 +40,8 @@ public class Character extends Entity {
         direction = 1;
         nextDirection = 1;
 
+        ghostsEaten = 0;
+
         position = new D2D(576, 576);
     }
 
@@ -47,6 +51,10 @@ public class Character extends Entity {
 
     public int getScore() {
         return score;
+    }
+
+    public int getGhostsEaten() {
+        return ghostsEaten;
     }
 
     public void setLives(int lives) {
@@ -148,7 +156,10 @@ public class Character extends Entity {
         }
 
         if (poweredUp) {
-            ++poweredUpFrames;
+            if (++poweredUpFrames > 300) {
+                poweredUp = false;
+                poweredUpFrames = 0;
+            }
         }
 
         if (invincible) {
@@ -160,12 +171,9 @@ public class Character extends Entity {
             for (Ghost ghost : ghosts) {
                 if (collisionDetection(ghost)) {
                     if (poweredUp) {
-                        if (poweredUpFrames > 300) {
-                            poweredUp = false;
-                            poweredUpFrames = 0;
-                        }
                         ghost.respawn();
                         score += 20;
+                        ++ghostsEaten;
                     } else {
                         invincible = true;
                         lives--;
